@@ -164,7 +164,8 @@
         const news = [
           {date:'2025-09', text_en:'Three papers accepted to NeurIPS 2025 (including one Spotlight).', text_zh:'3篇论文被 NeurIPS接收 2025（含 1Spotlight）。'},
           {date:'2025-04', text_en:'One paper accepted to ICCV 2025.', text_zh:'1篇论文被ICCV2025接收。'},
-          {date:'2025-02', text_en:'Released TextAtlas5M and LongTextAR.', text_zh:'发布 TextAtlas5M 与 LongTextAR 模型。'}
+          {date:'2025-02', text_en:'Released TextAtlas5M and LongTextAR.', text_zh:'发布 TextAtlas5M 与 LongTextAR 模型。'},
+          {date:'2025-01', text_en:'CSU-JPG Lab Established', text_zh:'CSU-JPG Lab 成立了。'}
         ];
 
         const openings = [{ title_en:'Spring/Fall 2026 Admissions & RA', title_zh:'2026 春/秋 招生 & RA',
@@ -199,8 +200,10 @@
         //     <path d="M18 42c-3 0-6 2-6 5s2.5 5 5.5 5H26" strokeLinecap="round"/>
         //     <path d="M46 42c3 0 6 2 6 5s-2.5 5-5.5 5H38" strokeLinecap="round"/>
         //   </svg>
+
+          
         <img
-        src="https://csu-jpg.github.io/public/assets/hf_face.svg"     // ← 换成你自己的黄色HF图片路径
+        src="https://csu-jpg.github.io/public/assets/hf_face.png"     // ← 换成你自己的黄色HF图片路径
         alt="Hugging Face"
         className="h-5 w-5"
         />
@@ -328,29 +331,36 @@
                       <h1 className="text-3xl md:text-4xl font-extrabold">{T.title_home}</h1>
                       <p className="mt-3 text-lg muted">{T.intro}</p>
 
-                      {/* 社交按钮 */}
-                      <div className="mt-5 flex flex-wrap gap-3">
-                        <a href="https://github.com/CSU-JPG" target="_blank" rel="noreferrer"
-                           className="inline-flex items-center gap-2 rounded-xl border border-theme surface px-3 py-2 text-sm hover:opacity-90">
-                          <GitHubIcon className="h-5 w-5"/>
-                          <span>CSU-JPG</span>
-                        </a>
-                        <a href="https://huggingface.co/CSU-JPG" target="_blank" rel="noreferrer"
-                           className="inline-flex items-center gap-2 rounded-xl border border-theme surface px-3 py-2 text-sm hover:opacity-90">
-                          <HFIcon className="h-5 w-5"/>
-                          <span>Hugging Face</span>
-                        </a>
-                      </div>
+                      
 
-                      {/* KPI（使用 state 渲染 + 可见时动画） */}
-                      <div ref={kpiRef} className="mt-6 grid grid-cols-3 gap-4">
-                        {[{label:T.hero_kpi[0].label,key:'papers'},{label:T.hero_kpi[1].label,key:'datasets'},{label:T.hero_kpi[2].label,key:'members'}].map((it,i)=>(
-                          <div key={i} className="rounded-2xl border border-theme p-5 card text-center">
-                            <div className="text-3xl font-extrabold">{kpi[it.key]}</div>
-                            <div className="text-xs muted mt-1">{it.label}</div>
-                          </div>
-                        ))}
-                      </div>
+             {/* 社交 + KPI 合并为一行 */}
+<div ref={kpiRef} className="mt-6 flex flex-wrap items-center gap-3 md:gap-4">
+  {/* 社交按钮 */}
+  <a href="https://github.com/CSU-JPG" target="_blank" rel="noreferrer"
+     className="inline-flex items-center gap-2 rounded-xl border border-theme surface px-3 py-2 text-sm hover:opacity-90">
+    <GitHubIcon className="h-5 w-5"/>
+    <span>CSU-JPG</span>
+  </a>
+  <a href="https://huggingface.co/CSU-JPG" target="_blank" rel="noreferrer"
+     className="inline-flex items-center gap-2 rounded-xl border border-theme surface px-3 py-2 text-sm hover:opacity-90">
+    <HFIcon className="h-5 w-5"/>
+    <span>Hugging Face</span>
+  </a>
+
+  {/* 分隔线（可选） */}
+  <span className="hidden md:inline-block h-5 w-px bg-neutral-200 mx-1" />
+
+  {/* KPI 小卡片（同一行内流动，窄屏会自动换行） */}
+  {[{label:T.hero_kpi[0].label,key:'papers'},
+    {label:T.hero_kpi[1].label,key:'datasets'},
+    {label:T.hero_kpi[2].label,key:'members'}].map((it,i)=>(
+    <div key={i} className="rounded-2xl border border-theme card px-4 py-2.5 text-center inline-flex flex-col items-center">
+      <div className="text-2xl font-extrabold leading-none">{kpi[it.key]}</div>
+      <div className="text-[11px] muted mt-1">{it.label}</div>
+    </div>
+  ))}
+</div>
+
                     </div>
                   </div>
                 </section>
