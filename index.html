@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSU-JPG Lab | Vision-centric MLLM</title>
+    <meta name="description" content="CSU-JPG Lab — Vision-centric MLLM · 长文本图像生成与理解 · OR 推理与 PRM" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>html { scroll-behavior: smooth; }</style>
+  </head>
+  <body class="bg-white text-neutral-900">
+    <div id="root"><noscript>请启用 JavaScript 以查看本站内容。</noscript></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel" data-presets="env,react">
+      function safeMount(fn){ try { fn(); } catch(e){ console.error('[MountError]', e); } }
+      function whenReady(cb){ if (document.readyState==='complete'||document.readyState==='interactive'){cb();} else document.addEventListener('DOMContentLoaded',cb,{once:true}); }
+
+      whenReady(()=>safeMount(()=>{
+        const { useMemo, useState, useEffect } = React;
+        const nav=[{id:'home',label:'主页'},{id:'research',label:'研究方向'},{id:'news',label:'新闻'},{id:'publications',label:'论文'},{id:'datasets',label:'数据集 / Benchmark'},{id:'people',label:'成员'},{id:'openings',label:'招生/招聘'},{id:'blog',label:'Blog'},{id:'contact',label:'联系'}];
+
+        const research=[{title:'以视觉为中心的多模态大模型 (Vision-centric MLLM)',href:'stories.html',desc:'视觉为先的统一建模、长文本渲染、跨模态检索与推理、操作研究(OR)过程监督。',tags:['Vision-centric','Interleaved','Process Supervision']},{title:'Data-centric AI',href:'#datasets',desc:'大规模数据构建与治理、人机协同评测与自动化 benchmark、长文本渲染与布局理解评测框架。',tags:['Data-centric','Benchmark','Evaluation']},{title:'训练系统',href:'#research-systems',desc:'分布式训练、高效 tokenizer、压缩与检索增强记忆。',tags:['Tokenizer','Efficient Training']}];
+
+        const publications=[
+          {year:2025,title:'Vision-centric Token Compression in Large Language Model',venue:'NeurIPS 2025 Spotlight (CCF-A, Top-tier)',authors:'L. Xin et al.',link:'https://arxiv.org/abs/2502.00791',img:'https://csu-jpg.github.io/paper_figures/vist.png'},
+          {year:2025,title:'VaporTok: RL-Driven Adaptive Video Tokenizer with Prior & Task Awareness',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'M. Yang et al.',link:'#',img:'https://csu-jpg.github.io/paper_figures/vaportok.png'},
+          {year:2025,title:'Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Z. Chen et al.',link:'#',img:'https://csu-jpg.github.io/paper_figures/visual_thoughts.png'},
+          {year:2025,title:'Unlearning the Noisy Correspondence Makes CLIP More Robust',venue:'ICCV 2025 (CCF-A, Top-tier)',authors:'H. Han et al.',link:'#',img:'https://csu-jpg.github.io/paper_figures/unlearning.png'},
+          {year:2025,title:'Beyond Words: Advancing Long-Text Image Generation via Multimodal Autoregressive Models',venue:'arXiv 2025',authors:'Alex Jinpeng Wang*, Linjie Li, Zhengyuan Yang, Lijuan Wang, Min Li',link:'https://arxiv.org/abs/2503.20198',img:'https://fingerrec.github.io/index_files/jinpeng/papers/longtextar2025/main_ppl.png'},
+          {year:2025,title:'TextAtlas5M: A Large-scale Dataset for Dense Text Image Generation',venue:'arXiv 2025',authors:'Alex Jinpeng Wang*, Dongxing Mao, Jiawei Zhang, Weiming Han, Zhuobai Dong, Linjie Li, Yiqi Lin, Zhengyuan Yang, Libo Qin, Fuwei Zhang, Lijuan Wang, Min Li',link:'https://textatlas5m.github.io/',img:'https://fingerrec.github.io/index_files/jinpeng/papers/TEXTATLAS5M2025/intro.png'},
+          {year:2024,title:'Leveraging Visual Tokens for Extended Text Contexts in Multi-Modal Learning',venue:'NeurIPS 2024',authors:'Alex Jinpeng Wang*, Linjie Li, Yiqi Lin, Min Li, Lijuan Wang, Mike Zheng Shou',link:'https://arxiv.org/abs/2406.02547',img:'https://fingerrec.github.io/index_files/jinpeng/papers/ARXIV2024/motivation.png'}
+        ];
+
+        const datasets=[{name:'TextAtlas5M',brief:'大规模密集文本图像生成数据集，含训练集与 TextAtlasEval 测试基准',link:'https://textatlas5m.github.io/'},{name:'Howto-Interlink7M',brief:'首个高质量 interleaved 视频-文本数据集，增强跨片段上下文',link:'https://arxiv.org/abs/2401.00849'},{name:'V-MAGE',brief:'视觉-语言生成与评测框架，涵盖多模态任务与模型对齐评估。',link:'https://github.com/CSU-JPG/V-MAGE'},{name:'MVPBench',brief:'多模态视觉-语言基准套件，用于评测模型的跨模态推理与一致性能力。',link:'https://github.com/CSU-JPG/MVPBench'}];
+
+        const people=[{name:'Alex Jinpeng Wang (王金鹏)',role:'PI / CSU 计算机学院 · Tenure-track Professor',url:'https://fingerrec.github.io',avatar:'https://fingerrec.github.io/index_files/jinpeng/my_photo_2.jpg'},
+        {name:'Dongxing Mao',role:'RA',url:'https://scholar.google.com/citations?user=RLVSYY0AAAAJ&hl=en',avatar:'https://csu-jpg.github.io/person_figures/dongxing_mao.jpg'},
+        {name:'Jiahao Tang',role:'RA',url:'',avatar:'https://csu-jpg.github.io/person_figures/jiahao_tang.jpg'},
+        {name:'Wu Songjie',role:'Master',url:'',avatar:'https://csu-jpg.github.io/person_figures/songjie_wu.jpg'},
+        {name:'Suyang Hou',role:'Master',url:'',avatar:'https://csu-jpg.github.io/person_figures/suyang_hou.jpg'}
+      ];
+
+        const news=[{date:'2025-09',text:'3篇论文被 NeurIPS接收 2025（含 1Spotlight）。'},{date:'2025-04',text:'1篇论文被ICCV2025接收。'},{date:'2025-02',text:'发布 TextAtlas5M 与 LongTextAR 模型。'}];
+
+        const openings=[{title:'2026 春/秋 招生 & RA',body:'我们长期招收博士/硕士/RA/访问生，方向含 Vision-centric MLLM、长文本渲染、OR 推理与 PRM。',contact:'请发送简历至: jpwang@csu.edu.cn (标题包含【应聘】)'}];
+
+        const Logo=()=> (<div className="flex items-center gap-2"><span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-black text-white shadow"><span className="text-lg font-bold">J</span></span><div><div className="font-bold">CSU-JPG Lab</div><div className="text-xs text-neutral-500">Vision-centric Multimodal Intelligence</div></div></div>);
+        const Section=({id,title,children})=>(<section id={id} className="scroll-mt-24 py-16"><h2 className="text-2xl md:text-3xl font-bold mb-6">{title}</h2>{children}</section>);
+        const Card=({children})=>(<div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">{children}</div>);
+
+        // ===== helpers for publication thumbnails & tests (console only) =====
+        function deriveThumb(link){
+          try{const u=new URL(link); if(u.hostname.includes('arxiv.org')) return 'https://upload.wikimedia.org/wikipedia/commons/9/95/ArXiv_logo_2022.svg';}catch(e){}
+          return '';
+        }
+        function runTests(){
+          const results=[];
+          results.push({name:'publications length', pass: Array.isArray(publications)&&publications.length>0});
+          results.push({name:'thumbs fallback ok', pass: publications.filter(p=> (p.link||'').includes('arxiv.org')).every(p=> !!(p.img||deriveThumb(p.link)))});
+          console.table(results);
+        }
+
+        function LabSite(){
+          // ensure arXiv fallback thumbnails once on mount
+          React.useEffect(()=>{ publications.forEach(p=>{ if(!p.img){ const t=deriveThumb(p.link||''); if(t) p.img=t; }}); runTests(); },[]);
+          return(<div><header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/90 backdrop-blur"><div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between"><a href="#home"><Logo/></a><nav className="hidden md:flex items-center gap-6 text-sm">{nav.map(n=>(<a key={n.id} href={`#${n.id}`} className="hover:opacity-70">{n.label}</a>))}</nav></div></header>
+
+          <main className="max-w-7xl mx-auto px-4">
+            <Section id="home" title="CSU-JPG 实验室"><p className="text-neutral-700 text-lg">我们专注于以视觉为中心的多模态大模型（Vision-centric MLLM）与数据中心 AI：视觉-语言预训练、Interleaved 长上下文、长文本图像生成与理解、OR 推理。</p></Section>
+
+            <Section id="research" title="研究方向"><div className="grid md:grid-cols-3 gap-4">{research.map((r,i)=>(<Card key={i}><a href={r.href} className="text-lg font-semibold text-blue-700 hover:underline">{r.title}</a><p className="mt-2 text-sm text-neutral-700">{r.desc}</p><div className="mt-3 flex flex-wrap gap-2">{r.tags.map((t,j)=>(<span key={j} className="text-xs rounded-lg border border-neutral-200 px-2 py-1">{t}</span>))}</div></Card>))}</div></Section>
+
+            <Section id="news" title="新闻"><div className="grid gap-4">{news.map((n,i)=>(<Card key={i}><div className="text-sm text-neutral-600">{n.date} · {n.text}</div></Card>))}</div></Section>
+
+            <Section id="publications" title="论文"><div className="grid gap-4">{publications.map((p,i)=>(<Card key={i}><div className="flex items-start gap-4">{p.img?(<img src={p.img} alt={p.title} className="h-16 w-28 rounded border object-cover flex-none"/>):(<div className="h-16 w-28 rounded border bg-neutral-100 flex items-center justify-center text-xs text-neutral-500 flex-none">No Image</div>)}<div><a href={p.link} target="_blank" className="font-semibold text-blue-700 hover:underline">{p.title}</a><div className="text-sm text-neutral-600 mt-1">{p.authors} · {p.venue} · {p.year}</div></div></div></Card>))}</div></Section>
+
+            <Section id="datasets" title="数据集 / Benchmark"><div className="grid md:grid-cols-2 gap-4">{datasets.map((d,i)=>(<Card key={i}><div className="font-semibold">{d.name}</div><div className="text-sm text-neutral-700 mt-1">{d.brief}</div><a href={d.link} className="text-blue-700 hover:underline text-sm mt-2 inline-block" target="_blank">{d.link}</a></Card>))}</div></Section>
+
+            <Section id="people" title="成员"><div className="grid md:grid-cols-3 gap-4">{people.map((p,i)=>(<Card key={i}><div className="flex items-center gap-3">{p.avatar?(<img src={p.avatar} alt={p.name} className="h-12 w-12 rounded-full object-cover border"/>):(<div className="h-12 w-12 rounded-full border bg-neutral-100 flex items-center justify-center text-sm font-semibold">{p.name[0]}</div>)}<div><div className="font-semibold">{p.name}</div><div className="text-sm text-neutral-700">{p.role}</div>{p.url&&<a href={p.url} target="_blank" className="text-xs text-blue-700 hover:underline mt-1 inline-block">主页 / Homepage</a>}</div></div></Card>))}</div></Section>
+
+            <Section id="openings" title="招生/招聘"><div className="grid gap-4">{openings.map((o,i)=>(<Card key={i}><div className="font-semibold">{o.title}</div><div className="text-sm text-neutral-700 mt-1">{o.body}</div><div className="text-xs text-neutral-500 mt-1">{o.contact}</div></Card>))}</div></Section>
+
+            <Section id="blog" title="Blog"><Card><a href="stories.html" className="text-lg font-semibold text-blue-700 hover:underline">Stories：Vision-centric MLLM 的技术演进</a><div className="text-sm text-neutral-600 mt-1">发布于 2025-10-21 · 研究长文本视觉化压缩路线、相关证据与我们的方法演进</div></Card></Section>
+
+            <Section id="contact" title="联系"><Card><div className="grid md:grid-cols-3 gap-4 text-sm text-neutral-700"><div><div className="font-semibold">地址</div><div>中南大学 · 计算机学院 · CSU-JPG 实验室</div></div><div><div className="font-semibold">邮箱</div><div>jinpengwang@csu.edu.cn</div></div><div><div className="font-semibold">社交</div><div><a href="https://github.com/CSU-JPG" className="text-blue-700 hover:underline" target="_blank">GitHub</a> / <a href="https://huggingface.co/CSU-JPG" className="text-blue-700 hover:underline" target="_blank">HuggingFace</a></div></div></div></Card></Section>
+          </main>
+
+          <footer className="border-t border-neutral-200 py-10 text-center text-sm text-neutral-500">© {new Date().getFullYear()} CSU-JPG Lab. <a href="https://csu-jpg.github.io" className="hover:underline">https://csu-jpg.github.io</a></footer>
+        </div>);}
+
+        const root=ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<LabSite/>);
+      }));
+    </script>
+  </body>
+</html>
