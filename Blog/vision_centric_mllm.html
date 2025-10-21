@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stories｜以视觉为中心的多模态大模型演进</title>
+    <meta name="description" content="CSU-JPG：围绕 Leveraging Visual Tokens (NeurIPS'24) 与 Vision-centric Token Compression (NeurIPS'25 Spotlight) 的研究故事与技术演进。" />
+    <meta property="og:title" content="Stories｜以视觉为中心的多模态大模型演进" />
+    <meta property="og:description" content="从将长文本视觉化的直觉，到视觉快速扫描 + 语言精读的阅读启发式，讲述我们 Vision-centric MLLM 的两步走路线。" />
+    <meta property="og:type" content="article" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🧠</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>html{scroll-behavior:smooth}</style>
+  </head>
+  <body class="bg-white text-neutral-900">
+    <header class="border-b border-neutral-200">
+      <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="https://csu-jpg.github.io/" class="text-sm text-blue-700 hover:underline">← 返回首页</a>
+        <div class="text-sm text-neutral-500">发布于 2025-10-21 · CSU-JPG Lab</div>
+      </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-10">
+      <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">以视觉为中心（Vision-centric）的多模态大模型演进</h1>
+      <p class="mt-3 text-neutral-600">本文讲述我们将<strong>长文本“视觉化”</strong>、并以<strong>视觉为先</strong>推进多模态大模型（MLLM）能力的两步走路线：
+        <span class="whitespace-nowrap">① NeurIPS'24：Leveraging Visual Tokens</span> 与
+        <span class="whitespace-nowrap">② NeurIPS'25 Spotlight：Vision-centric Token Compression</span>。</p>
+
+      <!-- Hero Figure -->
+      <figure class="mt-6">
+        <img class="w-full rounded-2xl border" src="https://fingerrec.github.io/index_files/jinpeng/papers/ARXIV2024/motivation.png" alt="NeurIPS 2024 Visual Tokens Motivation"/>
+        <figcaption class="mt-2 text-xs text-neutral-500">图 1：将长文本视觉化，由视觉编码器处理布局与密集信息，缓解 LLM 上下文压力（NeurIPS'24）。</figcaption>
+      </figure>
+
+      <!-- Outline -->
+      <nav class="mt-8 text-sm">
+        <div class="font-semibold">目录</div>
+        <ol class="list-decimal list-inside mt-2 space-y-1 text-blue-700">
+          <li><a class="hover:underline" href="#motivation">动机：为何“把文本视觉化”？</a></li>
+          <li><a class="hover:underline" href="#nips24">NeurIPS'24：Leveraging Visual Tokens for Extended Text Contexts</a></li>
+          <li><a class="hover:underline" href="#nips25">NeurIPS'25 Spotlight：Vision-centric Token Compression in LLM</a></li>
+          <li><a class="hover:underline" href="#compare">对比与演进：两步走如何衔接</a></li>
+          <li><a class="hover:underline" href="#related">相关证据与参考</a></li>
+        </ol>
+      </nav>
+
+      <section id="motivation" class="mt-10">
+        <h2 class="text-2xl font-bold">动机：为何“把文本视觉化”？</h2>
+        <p class="mt-3 leading-7 text-neutral-700">在真实世界中，长文本往往<strong>混排</strong>、含有<strong>布局</strong>、<strong>密集字符</strong>与<strong>跨区域关联</strong>。直接让语言模型处理这些输入，不仅占用宝贵的上下文窗口，也让模型在版式理解与跨段信息整合上承压。视觉编码器在<strong>空间结构</strong>、<strong>排版</strong>与<strong>扫描</strong>方面具备天然优势：如果我们先把长文本渲染为图像或视觉 token，视觉模型可以先行“扫图”，只把关键信息传递给 LLM，从而实现<strong>更长上下文、更高效率、更稳健的理解</strong>。</p>
+      </section>
+
+      <section id="nips24" class="mt-10">
+        <h2 class="text-2xl font-bold">NeurIPS'24：Leveraging Visual Tokens for Extended Text Contexts</h2>
+        <p class="mt-3 leading-7 text-neutral-700">我们在 2024 年提出：<strong>用视觉编码器压缩长文本</strong>，将文本“视觉化”并编码为视觉 token，结合语言模型进行多模态推理。这一方案显著拉长了有效上下文，并对复杂版式、表格、截图类输入更友好。</p>
+        <ul class="mt-3 list-disc list-inside text-neutral-700 space-y-1">
+          <li>直观好处：<em>上下文预算</em>更省、<em>跨区域关联</em>更稳。</li>
+          <li>典型场景：说明书/网页/论文截图解析、跨段落问答、带复杂排版的检索与推理。</li>
+        </ul>
+        <figure class="mt-4">
+          <img class="w-full rounded-2xl border" src="https://fingerrec.github.io/index_files/jinpeng/papers/longtextar2025/main_ppl.png" alt="LongTextAR Figure"/>
+          <figcaption class="mt-2 text-xs text-neutral-500">图 2：LongTextAR 等相关工作补充了密集文本图像生成/理解的训练与评测维度。</figcaption>
+        </figure>
+        <div class="mt-3 text-sm text-blue-700 space-x-4">
+          <a class="hover:underline" href="https://arxiv.org/abs/2406.02547" target="_blank" rel="noreferrer">论文（arXiv:2406.02547）</a>
+          <a class="hover:underline" href="https://github.com/showlab/visincontext" target="_blank" rel="noreferrer">代码</a>
+          <a class="hover:underline" href="https://fingerrec.github.io/visincontext/" target="_blank" rel="noreferrer">项目页</a>
+        </div>
+      </section>
+
+      <section id="nips25" class="mt-10">
+        <h2 class="text-2xl font-bold">NeurIPS'25 Spotlight：Vision-centric Token Compression in LLM</h2>
+        <p class="mt-3 leading-7 text-neutral-700">2025 年我们进一步提出<strong>阅读启发式</strong>：<em>人类会用“视觉”快速扫描不重要信息、用“语言”精读关键信息</em>。据此，我们将<strong>非关键信息交给视觉编码器压缩</strong>，把宝贵的语言上下文留给核心内容，实现更低延迟、更强长文处理能力。</p>
+        <ul class="mt-3 list-disc list-inside text-neutral-700 space-y-1">
+          <li>视觉：快速扫描、结构抽取、冗余压缩。</li>
+          <li>语言：关键细节、逻辑推理、高层规划。</li>
+          <li>效果：在同等或更小上下文下，保持/提升复杂任务性能。</li>
+        </ul>
+        <div class="mt-3 text-sm text-blue-700 space-x-4">
+          <a class="hover:underline" href="https://arxiv.org/abs/2502.00791" target="_blank" rel="noreferrer">论文（预印本）</a>
+        </div>
+      </section>
+
+      <section id="compare" class="mt-10">
+        <h2 class="text-2xl font-bold">对比与演进：两步走如何衔接</h2>
+        <div class="mt-3 grid md:grid-cols-2 gap-4 text-sm">
+          <div class="rounded-2xl border p-4">
+            <div class="font-semibold">Step 1（NeurIPS'24）</div>
+            <ul class="mt-2 list-disc list-inside space-y-1 text-neutral-700">
+              <li>把文本视觉化 → 视觉 token 压缩长上下文</li>
+              <li>强化布局与密集文本理解</li>
+              <li>显著降低语言上下文占用</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border p-4">
+            <div class="font-semibold">Step 2（NeurIPS'25 Spotlight）</div>
+            <ul class="mt-2 list-disc list-inside space-y-1 text-neutral-700">
+              <li>阅读启发式：视觉快速扫、语言精读</li>
+              <li>动态分配上下文预算，更高效</li>
+              <li>端到端任务性能持续提升</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="related" class="mt-10">
+        <h2 class="text-2xl font-bold">相关证据与参考</h2>
+        <p class="mt-3 leading-7 text-neutral-700">“文本视觉化”的思路在社区中有多条平行证据支撑：</p>
+        <ul class="mt-2 list-disc list-inside text-neutral-700 space-y-1">
+          <li>Princeton：<em>Language Modelling with Pixels</em>（ICLR 2023）</li>
+          <li>Google Research：<em>CLIPPO: Image-and-Language Understanding from Pixels Only</em>（CVPR 2023）</li>
+          <li>Lee et al.：<em>Pix2Struct</em>（ICML 2023）</li>
+          <li>陈丹奇团队：<em>Improving Language Understanding from Screenshots</em>（ArXiv 2024/02）</li>
+        </ul>
+        <p class="mt-3 text-sm text-blue-700">
+          延伸阅读：
+          <a class="hover:underline" href="https://textatlas5m.github.io/" target="_blank" rel="noreferrer">TextAtlas5M</a>
+          ，<a class="hover:underline" href="https://github.com/CSU-JPG/V-MAGE" target="_blank" rel="noreferrer">V-MAGE</a>
+          ，<a class="hover:underline" href="https://github.com/CSU-JPG/MVPBench" target="_blank" rel="noreferrer">MVPBench</a>
+        </p>
+      </section>
+
+      <hr class="my-10 border-neutral-200"/>
+      <div class="flex items-center justify-between text-sm">
+        <a href="./" class="text-blue-700 hover:underline">← 返回首页</a>
+        <a href="#top" class="text-neutral-500 hover:underline">回到顶部 ↑</a>
+      </div>
+    </main>
+
+    <footer class="border-t border-neutral-200 py-10 text-center text-sm text-neutral-500">
+      © 2025 CSU-JPG Lab · <a class="hover:underline" href="https://csu-jpg.github.io" target="_blank" rel="noreferrer">https://csu-jpg.github.io</a>
+    </footer>
+  </body>
+</html>

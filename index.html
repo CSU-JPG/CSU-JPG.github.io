@@ -26,10 +26,10 @@
         const research=[{title:'以视觉为中心的多模态大模型 (Vision-centric MLLM)',href:'stories.html',desc:'视觉为先的统一建模、长文本渲染、跨模态检索与推理、操作研究(OR)过程监督。',tags:['Vision-centric','Interleaved','Process Supervision']},{title:'Data-centric AI',href:'#datasets',desc:'大规模数据构建与治理、人机协同评测与自动化 benchmark、长文本渲染与布局理解评测框架。',tags:['Data-centric','Benchmark','Evaluation']},{title:'训练系统',href:'#research-systems',desc:'分布式训练、高效 tokenizer、压缩与检索增强记忆。',tags:['Tokenizer','Efficient Training']}];
 
         const publications=[
-          {year:2025,title:'Vision-centric Token Compression in Large Language Model',venue:'NeurIPS 2025 Spotlight (CCF-A, Top-tier)',authors:'L. Xin et al.',link:'https://arxiv.org/abs/2502.00791',img:'https://csu-jpg.github.io/paper_figures/vist.png'},
-          {year:2025,title:'VaporTok: RL-Driven Adaptive Video Tokenizer with Prior & Task Awareness',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'M. Yang et al.',link:'#',img:'https://csu-jpg.github.io/paper_figures/vaportok.png'},
-          {year:2025,title:'Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Z. Chen et al.',link:'https://arxiv.org/abs/2505.15510',img:'https://csu-jpg.github.io/paper_figures/visual_thought.png'},
-          {year:2025,title:'Unlearning the Noisy Correspondence Makes CLIP More Robust',venue:'ICCV 2025 (CCF-A, Top-tier)',authors:'H. Han et al.',link:'https://arxiv.org/abs/2507.03434',img:'https://csu-jpg.github.io/paper_figures/unlearning.png'},
+          {year:2025,title:'Vision-centric Token Compression in Large Language Model',venue:'NeurIPS 2025 Spotlight (CCF-A, Top-tier)',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Xiangbo Shu, Jinhui Tang',link:'https://arxiv.org/abs/2502.00791',img:'https://csu-jpg.github.io/paper_figures/vist.png'},
+          {year:2025,title:'VaporTok: RL-Driven Adaptive Video Tokenizer with Prior & Task Awareness',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Minghao Yang, Zechen Bai, Jing Lin, Haoqian Wang, Alex Jinpeng Wang*',link:'https://arxiv.org/abs/2506.08104',img:'https://csu-jpg.github.io/paper_figures/vaportok.png'},
+          {year:2025,title:'Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Zihui Cheng, Qiguang Chen, Xiao Xu, Jiaqi Wang, Weiyun Wang, Hao Fei, Yidong Wang, Alex Jinpeng Wang*, Zhi Chen, Wanxiang Che, Libo Qin',link:'https://arxiv.org/abs/2505.15510',img:'https://csu-jpg.github.io/paper_figures/visual_thought.png'},
+          {year:2025,title:'Unlearning the Noisy Correspondence Makes CLIP More Robust',venue:'ICCV 2025 (CCF-A, Top-tier)',authors:'Haochen Han, Alex Jinpeng Wang, Peijun Ye, Fangming Liu',link:'https://arxiv.org/abs/2507.03434',img:'https://csu-jpg.github.io/paper_figures/unlearning.png'},
           {year:2025,title:'Beyond Words: Advancing Long-Text Image Generation via Multimodal Autoregressive Models',venue:'arXiv 2025',authors:'Alex Jinpeng Wang*, Linjie Li, Zhengyuan Yang, Lijuan Wang, Min Li',link:'https://arxiv.org/abs/2503.20198',img:'https://fingerrec.github.io/index_files/jinpeng/papers/longtextar2025/main_ppl.png'},
           {year:2025,title:'TextAtlas5M: A Large-scale Dataset for Dense Text Image Generation',venue:'arXiv 2025',authors:'Alex Jinpeng Wang*, Dongxing Mao, Jiawei Zhang, Weiming Han, Zhuobai Dong, Linjie Li, Yiqi Lin, Zhengyuan Yang, Libo Qin, Fuwei Zhang, Lijuan Wang, Min Li',link:'https://textatlas5m.github.io/',img:'https://fingerrec.github.io/index_files/jinpeng/papers/TEXTATLAS5M2025/intro.png'},
           {year:2024,title:'Leveraging Visual Tokens for Extended Text Contexts in Multi-Modal Learning',venue:'NeurIPS 2024 (CCF-A, Top-tier) ',authors:'Alex Jinpeng Wang*, Linjie Li, Yiqi Lin, Min Li, Lijuan Wang, Mike Zheng Shou',link:'https://arxiv.org/abs/2406.02547',img:'https://fingerrec.github.io/index_files/jinpeng/papers/ARXIV2024/motivation.png'}
@@ -65,6 +65,27 @@
         }
 
         function LabSite(){
+            // ---- Publications：筛选（年份 + 关键词）----
+            const [pubQuery, setPubQuery] = React.useState('');
+            const [pubYear, setPubYear] = React.useState('All');
+
+            // 年份选项（降序）：All + 出现过的年份
+            const years = React.useMemo(
+            () => ['All', ...Array.from(new Set(publications.map(p => p.year))).sort((a,b)=>b-a)],
+            []
+            );
+
+            // 过滤：按年份 + 关键词（标题/作者/会议）
+            const pubFiltered = React.useMemo(() => {
+            const q = pubQuery.trim().toLowerCase();
+            return publications.filter(p => {
+                const hitYear = pubYear === 'All' || p.year === pubYear;
+                const hay = [p.title, p.venue, p.authors].join(' ').toLowerCase();
+                const hitQ = !q || hay.includes(q);
+                return hitYear && hitQ;
+            });
+            }, [pubQuery, pubYear]);
+
           // ensure arXiv fallback thumbnails once on mount
           React.useEffect(()=>{ publications.forEach(p=>{ if(!p.img){ const t=deriveThumb(p.link||''); if(t) p.img=t; }}); runTests(); },[]);
           return(<div><header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/90 backdrop-blur"><div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between"><a href="#home"><Logo/></a><nav className="hidden md:flex items-center gap-6 text-sm">{nav.map(n=>(<a key={n.id} href={`#${n.id}`} className="hover:opacity-70">{n.label}</a>))}</nav></div></header>
@@ -76,7 +97,48 @@
 
             <Section id="news" title="新闻"><div className="grid gap-4">{news.map((n,i)=>(<Card key={i}><div className="text-sm text-neutral-600">{n.date} · {n.text}</div></Card>))}</div></Section>
 
-            <Section id="publications" title="论文"><div className="grid gap-4">{publications.map((p,i)=>(<Card key={i}><div className="flex items-start gap-4">{p.img?(<img src={p.img} alt={p.title} className="h-16 w-28 rounded border object-cover flex-none"/>):(<div className="h-16 w-28 rounded border bg-neutral-100 flex items-center justify-center text-xs text-neutral-500 flex-none">No Image</div>)}<div><a href={p.link} target="_blank" className="font-semibold text-blue-700 hover:underline">{p.title}</a><div className="text-sm text-neutral-600 mt-1">{p.authors} · {p.venue} · {p.year}</div></div></div></Card>))}</div></Section>
+            <Section id="publications" title="论文">
+  <div className="mb-4 flex gap-3 items-center flex-wrap">
+    <input
+      placeholder="搜索标题/作者/会议…"
+      value={pubQuery}
+      onChange={e=>setPubQuery(e.target.value)}
+      className="w-72 rounded border px-3 py-2 text-sm"
+    />
+    <select
+      value={pubYear}
+      onChange={e=>setPubYear(e.target.value==='All' ? 'All' : Number(e.target.value))}
+      className="w-32 rounded border px-3 py-2 text-sm"
+    >
+      {years.map((y,i)=>(<option key={i}>{y}</option>))}
+    </select>
+    <span className="text-xs text-neutral-500">共 {pubFiltered.length} 篇</span>
+  </div>
+
+  <div className="grid gap-4">
+    {pubFiltered.map((p,i)=>(
+      <Card key={i}>
+        <div className="flex items-start gap-4">
+          {p.img ? (
+            <img src={p.img} alt={p.title} className="h-16 w-28 rounded border object-cover flex-none"/>
+          ) : (
+            <div className="h-16 w-28 rounded border bg-neutral-100 flex items-center justify-center text-xs text-neutral-500 flex-none">
+              No Image
+            </div>
+          )}
+          <div>
+            <a href={p.link} target="_blank" className="font-semibold text-blue-700 hover:underline">
+              {p.title}
+            </a>
+            <div className="text-sm text-neutral-600 mt-1">
+              {p.authors} · {p.venue} · {p.year}
+            </div>
+          </div>
+        </div>
+      </Card>
+    ))}
+  </div>
+</Section>
 
             <Section id="datasets" title="数据集 / Benchmark"><div className="grid md:grid-cols-2 gap-4">{datasets.map((d,i)=>(<Card key={i}><div className="font-semibold">{d.name}</div><div className="text-sm text-neutral-700 mt-1">{d.brief}</div><a href={d.link} className="text-blue-700 hover:underline text-sm mt-2 inline-block" target="_blank">{d.link}</a></Card>))}</div></Section>
 
@@ -84,7 +146,7 @@
 
             <Section id="openings" title="招生/招聘"><div className="grid gap-4">{openings.map((o,i)=>(<Card key={i}><div className="font-semibold">{o.title}</div><div className="text-sm text-neutral-700 mt-1">{o.body}</div><div className="text-xs text-neutral-500 mt-1">{o.contact}</div></Card>))}</div></Section>
 
-            <Section id="blog" title="Blog"><Card><a href="stories.html" className="text-lg font-semibold text-blue-700 hover:underline">Stories：Vision-centric MLLM 的技术演进</a><div className="text-sm text-neutral-600 mt-1">发布于 2025-10-21 · 研究长文本视觉化压缩路线、相关证据与我们的方法演进</div></Card></Section>
+            <Section id="blog" title="Blog"><Card><a href="Blog/vision_centric_mllm.html" className="text-lg font-semibold text-blue-700 hover:underline">Stories：Vision-centric MLLM 的技术演进</a><div className="text-sm text-neutral-600 mt-1">发布于 2025-10-21 · 研究长文本视觉化压缩路线、相关证据与我们的方法演进</div></Card></Section>
 
             <Section id="contact" title="联系"><Card><div className="grid md:grid-cols-3 gap-4 text-sm text-neutral-700"><div><div className="font-semibold">地址</div><div>中南大学 · 计算机学院 · CSU-JPG 实验室</div></div><div><div className="font-semibold">邮箱</div><div>jinpengwang@csu.edu.cn</div></div><div><div className="font-semibold">社交</div><div><a href="https://github.com/CSU-JPG" className="text-blue-700 hover:underline" target="_blank">GitHub</a> / <a href="https://huggingface.co/CSU-JPG" className="text-blue-700 hover:underline" target="_blank">HuggingFace</a></div></div></div></Card></Section>
           </main>
