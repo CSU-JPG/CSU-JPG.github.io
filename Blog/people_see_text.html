@@ -211,9 +211,17 @@
             <img src="https://csu-jpg.github.io/Blog/figures/ptp.png" alt="PTP screenshot language models">
             <figcaption class="mt-2 text-xs text-neutral-500">PTP (arXiv’24): joint patch-and-text prediction on screenshots.</figcaption>
           </figure>
+
+          <li><strong>PEAP</strong> (Lyu et al., arXiv 2025'): a unified perception paradigm for agentic language models that interact directly with real-world environments combining visual and textual information.</li>
+          <!-- (7) ptp.png -->
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/peap.png" alt="PEAP: a unified perception paradigm for agentic language models that interact directly with real-world environments combining visual and textual information.">
+            <figcaption class="mt-2 text-xs text-neutral-500">PEAP (arXiv’25): a unified perception paradigm for agentic language models that interact directly with real-world environments combining visual and textual information.</figcaption>
+          </figure>
         </ul>
         <p>
-          These works helped models <em>see</em> text, but left a key question: what tangible benefit does transforming text into images actually provide?
+          
+          These works helped models <em>see</em> text, but left a <span style="color:#d32f2f; font-weight:bold;"><u>key question： what tangible benefit does transforming text into images actually provide?</u></span>
         </p>
 
         <h2>3. Recent Attempts: Visual Tokens for Long-Context Compression</h2>
@@ -292,14 +300,6 @@
         </figure>
         </p>
 
-        <p>
-          <b> Extend to more downstream tasks? </b>
-          
-          PEAP proposes a unified perception paradigm for agentic language models that interact directly with real-world environments combining visual and textual information.
-          <figure class="mt-4">
-            <img src="https://csu-jpg.github.io/Blog/figures/peap.png" alt=" PixelWorld: Towards Perceiving Everything as Pixels. Arxiv 25'1.">
-          </figure>
-        </p>
         <h2>5. Toward the Next Generation of Vision-centric MLLM</h2>
         <ul>
           <li>Text is <strong>visual</strong>, not merely symbolic.</li>
@@ -330,14 +330,11 @@
           它把整个词当作视觉对象来识别，而非单纯的符号序列。因此我们能把“Cmabrigde”读成 Cambridge，也能在扭曲字体、混合书写系统、复杂版式中识别文字。
         </p>
 
-        <figure class="mt-4">
-          <div class="yt-wrap">
-            <iframe src="https://www.youtube.com/embed/hInWH0edZ7Y" title="VWFA / 大脑与阅读" allowfullscreen></iframe>
-          </div>
-          <figcaption class="mt-2 text-xs text-neutral-500">
-            大脑是在“看”文字：阅读首先是视觉加工，而不只是语言处理。
-          </figcaption>
-        </figure>
+          <!-- (1) human_brain.png -->
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/human_brain.png" alt="Visual Word Form Area: reading is visual">
+            <figcaption class="mt-2 text-xs text-neutral-500">"The Science Behind LearningRx Reading Programs". </figcaption>
+          </figure>
 
         <p><strong>本质上，人类是在“看”文本。</strong> 阅读首先是视觉，而不仅是语言。</p>
 
@@ -363,8 +360,14 @@
           在如 LAION-2B 等数据中，<strong>45%+</strong> 的网页图像包含文本（Lin 等，Parrot，ECCV 2024）。文档、UI、图表、设计，本质上都是“视觉化文本”。
         </p>
 
-        <figure class="mt-6">
-          <img class="w-full" src="https://upload.wikimedia.org/wikipedia/commons/0/09/Leonardo_da_Vinci_-_Manuscripts.jpg" alt="达·芬奇手稿">
+              <!-- (3) parrot.png -->
+      <figure class="mt-6">
+        <img src="https://csu-jpg.github.io/Blog/figures/parrot.png" alt="Text prevalence in web images (Parrot)">
+        <figcaption class="mt-2 text-xs text-neutral-500">文本广泛存在于网页图像中：文档、UI、图表、设计。</figcaption>
+      </figure>
+        <!-- (2) dvq.png (放在分词后果示意) -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/dvq.png" alt="Discrete tokenization vs. visual perception">
           <figcaption class="mt-2 text-xs text-neutral-500">达·芬奇手稿</figcaption>
         </figure>
 
@@ -372,12 +375,39 @@
         <p>一些工作把文本当作图像信号来建模，以弥合这种差距：</p>
         <ul>
           <li><strong>PIXEL</strong>（Phillip 等，ICLR 2023）：把文本渲染为图像，用 ViT-MAE 进行像素重建预训练，去掉 tokenizer；对未见书写系统与正字法扰动更鲁棒。</li>
+               <!-- (4) pixel.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/pixel.png" alt="PIXEL: render text as images, ViT-MAE pretraining">
+          <figcaption class="mt-2 text-xs text-neutral-500">PIXEL (ICLR'23): 把文本渲染为图像并用 MAE 预训练。</figcaption>
+        </figure>
           <li><strong>CLIPPO</strong>（Michael 等，CVPR 2023）：用单一像素编码器统一图像与文本；文本渲染为图像，采用对比学习。</li>
+          <!-- (5) clippo.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/clippo.png" alt="CLIPPO pixel-only encoder">
+          <figcaption class="mt-2 text-xs text-neutral-500">CLIPPO (CVPR'23): 用于图像和文本的纯像素编码器。</figcaption>
+        </figure>
           <li><strong>Pix2Struct</strong>（Lee 等，ICML 2023）：把截图解析为结构化视觉输入，面向文档/版式理解。</li>
+            <!-- (6) pix2struct.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/pix2struct.png" alt="Pix2Struct for screenshot and layout understanding">
+          <figcaption class="mt-2 text-xs text-neutral-500">Pix2Struct (ICML'23): 把截图解析为结构化视觉输入。</figcaption>
+        </figure>
           <li><strong>PTP</strong>（Gao 等，arXiv 2024）：提出截图语言模型与 Patch-and-Text Prediction 目标，同时重建图像补丁与文本。</li>
+          <!-- (7) ptp.png -->
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/ptp.png" alt="PTP screenshot language models">
+            <figcaption class="mt-2 text-xs text-neutral-500">PTP (arXiv'24): 截图上的联合补丁和文本预测。</figcaption>
+          </figure>
         </ul>
+        <li><strong>PEAP</strong>（Lyu 等，arXiv 2025')提出一种统一的感知范式，用于与真实世界环境直接交互的智能语言模型，结合视觉和文本信息。</li>
+          <!-- (8) peap.png -->
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/peap.png" alt="PEAP: a unified perception paradigm for agentic language models that interact directly with real-world environments combining visual and textual information.">
+            <figcaption class="mt-2 text-xs text-neutral-500">PEAP (arXiv'25): 一种统一的感知范式，用于与真实世界环境直接交互的智能语言模型，结合视觉和文本信息。</figcaption>
+          </figure>
         <p>
-          这些工作让模型开始“看见”文本，但一个关键问题仍待回答：把文本变成图像，<em>具体带来什么可量化收益</em>？
+        
+          这些工作让模型开始"看见"文本，但一个关键问题仍待回答：把文本变成图像，<em style="color: #22c55e; font-weight: bold;">具体带来什么可量化收益</em>？
         </p>
 
         <h2>3. 近期进展：用视觉 token 做长上下文压缩</h2>
@@ -389,21 +419,42 @@
         </ul>
         <p>
           交错式（interleaved）文档级多模态预训练是理想设定。<br>
-          <strong>NeurIPS 2024 —— “Leveraging Visual Tokens for Extended Text Contexts”：</strong>
+          <strong>NeurIPS 2024 —— "Leveraging Visual Tokens for Extended Text Contexts"：</strong>
           将长文本表示为紧凑的视觉 token，使训练与推理都能处理更长、更密集的上下文。
           该工作把预训练阶段的可用文本上下文从 <strong>256 → 2048</strong>（NVIDIA H100）显著提升。
         </p>
+            <!-- (9) vis_in_context.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/vis_in_context.png" alt="Visual tokens for extended in-context learning">
+          <figcaption class="mt-2 text-xs text-neutral-500">利用视觉 token 进行扩展的上下文理解。</figcaption>
+        </figure>
+                <!-- (10) vis_in_context_h100.png -->
+                <figure class="mt-4">
+                  <img src="https://csu-jpg.github.io/Blog/figures/visual_in_context_h100.png" alt="H100 pretraining: text context 256→2048">
+                  <figcaption class="mt-2 text-xs text-neutral-500">在 NVIDIA H100 上：上下文文本长度从 256 → 2048 提升。</figcaption>
+                </figure>
 
         <p>
           长文本理解是另一理想应用。<br>
-          <strong>Xin 等，NeurIPS 2025 —— “Vision-Centric Token Compression in Large Language Models”（VIST）：</strong>
+          <strong>Xin 等，NeurIPS 2025 —— "Vision-Centric Token Compression in Large Language Models"（VIST）：</strong>
           受人类快/慢通路阅读启发：<em>快通路</em>把远距上下文渲染成图像以快速抽取语义；<em>慢通路</em>把关键文本直接送入 LLM 做深度推理。
         </p>
+
+        <!-- (11) vist.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/vist.png" alt="VIST: vision-centric token compression in LLMs">
+          <figcaption class="mt-2 text-xs text-neutral-500">VIST (NeurIPS'25): 快速视觉通路 + 慢速语言通路。</figcaption>
+        </figure>
 
         <p>
           <strong>DeepSeek-OCR（2025 年 10 月）：Contextual Optical Compression</strong> 把视觉 token 压缩扩展到大规模 OCR：
           将数千文本 token 压缩为数百个视觉表征，达到约 <strong>97% OCR 精度、约 10× 压缩</strong>。
         </p>
+        <!-- (12) deepseek_motivation.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/deepseek_motivation.png" alt="DeepSeek-OCR contextual optical compression">
+          <figcaption class="mt-2 text-xs text-neutral-500">DeepSeek-OCR: 约 97% 精度，约 10× 压缩。</figcaption>
+        </figure>
 
         <p><em>视觉感知与语言理解的融合并非偶然——它正在成为下一个范式。</em></p>
 
@@ -417,6 +468,17 @@
           <strong>TextAtlas5M</strong> 提供大规模致密文本渲染数据，覆盖说明、文档与设计等视觉表达；
           <br><em>Beyond Words</em> 旨在从自然语言生成高文本量、高信息密度的图像，推动多模态自回归模型迈向真正的长文本视觉生成。
         </p>
+              <!-- (13) textatlas_5m.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/text_atlas_5m.png" alt="TextAtlas5M dataset for dense text rendering">
+          <figcaption class="mt-2 text-xs text-neutral-500">TextAtlas5M: 大规模致密文本渲染。Arxiv 25'2。</figcaption>
+        </figure>
+           <!-- (14) long_text_ar.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/long_text_ar.png" alt="Beyond Words: long-text visual generation">
+          <figcaption class="mt-2 text-xs text-neutral-500"><em>Beyond Words</em>: 迈向长文本视觉生成。Arxiv 25'2。</figcaption>
+        </figure>
+
 
         <h2>5. 走向下一代 Vision-centric MLLM</h2>
         <ul>
