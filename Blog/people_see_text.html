@@ -165,6 +165,15 @@
           <li><strong>Over-segmentation in multilingual text:</strong> Low-resource languages get fragmented into meaningless subwords.</li>
           <li><strong>Inefficiency for long text:</strong> A few characters can turn into multiple tokens, inflating context length and cost.</li>
         </ul>
+
+        <b>It is hard to process Interleaved Document  with tokenization: </b>
+
+        <!-- (2) dvq.png (放在分词后果示意) -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/dvq.png" alt="Discrete tokenization vs. visual perception">
+          <figcaption class="mt-2 text-xs text-neutral-500">Leonardo da Vinci’s Manuscripts</figcaption>
+        </figure>
+
         <p>
           This is why a model might read a paper or screenshot yet miss equations, tables, or captions — because they are treated as pixels, not text.
         </p>
@@ -178,15 +187,19 @@
         <img src="https://csu-jpg.github.io/Blog/figures/parrot.png" alt="Text prevalence in web images (Parrot)">
         <figcaption class="mt-2 text-xs text-neutral-500">Text is ubiquitous in web images: documents, UI, charts, designs.</figcaption>
       </figure>
-        <!-- (2) dvq.png (放在分词后果示意) -->
-        <figure class="mt-4">
-          <img src="https://csu-jpg.github.io/Blog/figures/dvq.png" alt="Discrete tokenization vs. visual perception">
-          <figcaption class="mt-2 text-xs text-neutral-500">Leonardo da Vinci’s Manuscripts</figcaption>
-        </figure>
+
+
 
         <h2>2. Early Attempts: Making Models See Text</h2>
         <p>Several early studies tried to bridge this gap by treating text as an image signal:</p>
         <ul>
+          <li><strong>Visual Text Representations</strong> (Elizabeth et al., Arxiv 21'4): The paper introduces visual text representations that replace discrete subword vocabularies with continuous embeddings derived from rendered text. This method matches traditional models in translation quality while being far more robust to noisy or corrupted input.</li>
+          <!-- (4) visual_text_representations.png -->
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/visual_text_repre.png" alt="visual text representations">
+            <figcaption class="mt-2 text-xs text-neutral-500">visual text representations</figcaption>
+          </figure>
+
           <li><strong>PIXEL</strong> (Phillip et al., ICLR 2023): render text as images, pretrain ViT-MAE to reconstruct masked pixels, removing the tokenizer; robust to unseen scripts and orthographic perturbations.</li>
                <!-- (4) pixel.png -->
         <figure class="mt-4">
@@ -333,6 +346,13 @@
           <li><strong>多语文本过度切分：</strong>资源稀缺语言被拆成缺乏语义的片段。</li>
           <li><strong>长文本低效：</strong>少量字符可能对应多个 token，放大上下文长度与成本。</li>
         </ul>
+
+        <!-- (2) dvq.png (放在分词后果示意) -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/dvq.png" alt="Discrete tokenization vs. visual perception">
+          <figcaption class="mt-2 text-xs text-neutral-500">达·芬奇手稿</figcaption>
+        </figure>
+
         <p>
           这就是为什么模型“看过”论文或截图，却容易漏掉公式、表格或图注——因为它们被当成像素而非文本。
         </p>
@@ -347,15 +367,17 @@
         <img src="https://csu-jpg.github.io/Blog/figures/parrot.png" alt="Text prevalence in web images (Parrot)">
         <figcaption class="mt-2 text-xs text-neutral-500">文本广泛存在于网页图像中：文档、UI、图表、设计。</figcaption>
       </figure>
-        <!-- (2) dvq.png (放在分词后果示意) -->
-        <figure class="mt-4">
-          <img src="https://csu-jpg.github.io/Blog/figures/dvq.png" alt="Discrete tokenization vs. visual perception">
-          <figcaption class="mt-2 text-xs text-neutral-500">达·芬奇手稿</figcaption>
-        </figure>
+
 
         <h2>2. 早期尝试：让模型“看见”文本</h2>
         <p>一些工作把文本当作图像信号来建模，以弥合这种差距：</p>
         <ul>
+          <li><strong>visual text representations</strong>（Elizabeth 等，Arxiv 21'4）：把文本渲染为图像，用 ViT-MAE 进行像素重建预训练，去掉 tokenizer；对未见书写系统与正字法扰动更鲁棒。</li>
+          <!-- (4) visual_text_representations.png -->
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/visual_text_repre.png" alt="visual text representations">
+            <figcaption class="mt-2 text-xs text-neutral-500">visual text representations</figcaption>
+          </figure>
           <li><strong>PIXEL</strong>（Phillip 等，ICLR 2023）：把文本渲染为图像，用 ViT-MAE 进行像素重建预训练，去掉 tokenizer；对未见书写系统与正字法扰动更鲁棒。</li>
                <!-- (4) pixel.png -->
         <figure class="mt-4">
