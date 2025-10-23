@@ -274,7 +274,7 @@
           <span style="color:#d32f2f; font-weight:bold;">
             Long-text understanding in LLM is another ideal situation.
           </span>
-          <br><strong>Xin et al., NeurIPS 2025 — “Vision-Centric Token Compression in Large Language Models” (VIST):</strong>
+          <br><strong>Xing et al., NeurIPS 2025 — “Vision-Centric Token Compression in Large Language Models” (VIST):</strong>
           inspired by a human slow–fast reading circuit: a <em>fast</em> visualized path renders distant context as images for quick semantic extraction; a <em>slow</em> path feeds key text to LLM for deep reasoning.
         </p>
 
@@ -284,6 +284,19 @@
           <figcaption class="mt-2 text-xs text-neutral-500">VIST (NeurIPS’25): fast visual path + slow language path.</figcaption>
         </figure>
         </br>
+
+        <span style="color:#d32f2f; font-weight:bold;">
+          Classification and QA also worked.
+        </span>
+
+        <p>
+          <b><strong>Xing et al, Arxiv25'10 - "SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING"</strong></b>, this work extend this idea to more tasks include Classification, and QA.
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/see_the_text.png" alt="See The Text">
+            <figcaption class="mt-2 text-xs text-neutral-500">See The Text (Arxiv25'10)</figcaption>
+          </figure>
+        </p>
+
         <span style="color:#d32f2f; font-weight:bold;">
           Deepseek's answer: OCR.
         </span>
@@ -301,8 +314,29 @@
         <p><em>The convergence of visual perception and language understanding is not a coincidence — it is the next paradigm shift.</em></p>
 
 
+        <h2>4. The Future Ahead: A Vision-centric MLLM</h2>
+      <p>
+        In a truly vision-centric multimodal language model, we may no longer need a traditional tokenizer.
+        The model could read text visually — as humans do — and even generate text as images, <b> <u>unifying perception and generation in the same visual space.</u> </b>
+      </p>
+      <b> Dense Text Image Generation:</b>
+      <p>
+        To reach that goal, we must perfect image-based text rendering and long-text visual generation:
+        <strong>TextAtlas5M</strong> provides large-scale dense text rendering where captions, documents, and designs are visually represented.
+            <!-- (13) textatlas_5m.png -->
+      <figure class="mt-4">
+        <img src="https://csu-jpg.github.io/Blog/figures/text_atlas_5m.png" alt="TextAtlas5M dataset for dense text rendering">
+        <figcaption class="mt-2 text-xs text-neutral-500">TextAtlas5M: large-scale dense text rendering. Arxiv 25'2.</figcaption>
+      </figure>
+        <br><em>Beyond Words</em> aims to generate text-heavy, information-dense images from natural prompts, pushing multimodal autoregressive models toward true long-text visual generation.
+         <!-- (14) long_text_ar.png -->
+      <figure class="mt-4">
+        <img src="https://csu-jpg.github.io/Blog/figures/long_text_ar.png" alt="Beyond Words: long-text visual generation">
+        <figcaption class="mt-2 text-xs text-neutral-500"><em>Beyond Words</em>: toward long-text visual generation. Arxiv 25'2.</figcaption>
+      </figure>
+      </p>
 
-        <h2>4. Toward the Next Generation of Vision-centric MLLM</h2>
+        <h2>5. Toward the Next Generation of Vision-centric MLLM</h2>
         <ul>
           <li>Text is <strong>visual</strong>, not merely symbolic.</li>
           <li>Vision is <strong>language</strong>, not separate.</li>
@@ -455,13 +489,20 @@
           <strong>Xin 等，NeurIPS 2025 —— "Vision-Centric Token Compression in Large Language Models"（VIST）：</strong>
           受人类快/慢通路阅读启发：<em>快通路</em>把远距上下文渲染成图像以快速抽取语义；<em>慢通路</em>把关键文本直接送入 LLM 做深度推理。
         </p>
-
+        
         <!-- (11) vist.png -->
         <figure class="mt-4">
           <img src="https://csu-jpg.github.io/Blog/figures/vist.png" alt="VIST: vision-centric token compression in LLMs">
           <figcaption class="mt-2 text-xs text-neutral-500">VIST (NeurIPS'25): 快速视觉通路 + 慢速语言通路。</figcaption>
         </figure>
 
+        <p>
+          <b><strong>Xing et al., Arxiv25'10 - "SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING", 视觉处理文本的思想扩展到更多任务包括分类和QA.</strong></b>
+          <figure class="mt-4">
+            <img src="https://csu-jpg.github.io/Blog/figures/see_the_text.png" alt="See The Text">
+            <figcaption class="mt-2 text-xs text-neutral-500">See The Text (Arxiv25'10)</figcaption>
+          </figure>
+        </p>
         <p>
           <strong>DeepSeek-OCR（2025 年 10 月）：Contextual Optical Compression</strong> 把视觉 token 压缩扩展到大规模 OCR：
           将数千文本 token 压缩为数百个视觉表征，达到约 <strong>97% OCR 精度、约 10× 压缩</strong>。
@@ -477,7 +518,29 @@
 
 
 
-        <h2>4. 走向下一代 Vision-centric MLLM</h2>
+        <h2>4. 未来图景：Vision-centric MLLM</h2>
+        <p>
+          在真正以视觉为中心的多模态语言模型里，我们或许不再需要传统 tokenizer。
+          模型将像人一样“视觉化阅读”，甚至以图像方式“视觉化生成”文本，于同一视觉空间统一感知与创作。
+        </p>
+        <p>
+          为此我们需要完善基于图像的文本渲染与长文本视觉生成：
+          <strong>TextAtlas5M</strong> 提供大规模致密文本渲染数据，覆盖说明、文档与设计等视觉表达；
+        </p>
+              <!-- (13) textatlas_5m.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/text_atlas_5m.png" alt="TextAtlas5M dataset for dense text rendering">
+          <figcaption class="mt-2 text-xs text-neutral-500">TextAtlas5M: 大规模致密文本渲染。Arxiv 25'2。</figcaption>
+        </figure>
+
+        <br><em>Beyond Words</em> 旨在从自然语言生成高文本量、高信息密度的图像，推动多模态自回归模型迈向真正的长文本视觉生成。</br>
+           <!-- (14) long_text_ar.png -->
+        <figure class="mt-4">
+          <img src="https://csu-jpg.github.io/Blog/figures/long_text_ar.png" alt="Beyond Words: long-text visual generation">
+          <figcaption class="mt-2 text-xs text-neutral-500"><em>Beyond Words</em>: 迈向长文本视觉生成。Arxiv 25'2。</figcaption>
+        </figure>
+
+        <h2>5. 走向下一代 Vision-centric MLLM</h2>
         <ul>
           <li>文本首先是<strong>视觉</strong>，而非仅是符号。</li>
           <li>视觉就是<strong>语言</strong>，两者并不割裂。</li>
