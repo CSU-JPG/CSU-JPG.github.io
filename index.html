@@ -137,7 +137,7 @@
         ];
 
         const publications = [
-          {year:2025,title:'SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING',venue:'arXiv 2025',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Hongyu Qu, Zechao Li, Jinhui Tang',link:'https://arxiv.org/pdf/2510.18840',img:'https://csu-jpg.github.io/paper_figures/see_the_text.png'},
+          {year:2025,title:'SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING',venue:'arXiv 2025',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Hongyu Qu, Zechao Li, Jinhui Tang',link:'https://arxiv.org/pdf/2510.18840',img:'https://csu-jpg.github.io/paper_figures/seetok.png'},
           {year:2025,title:'Chart2Code: From charts to code: a hierarchical benchmark for multimodal models',venue:'arXiv 2025',authors:'Jiahao Tang, Henry Hengyuan Zhao, Lijian Wu, Yifei Tao, Dongxing Mao, Yang Wan, Jingru Tan, Min Zeng, Min Li, Alex Jinpeng Wang',link:'https://csu-jpg.github.io/Chart2Code.github.io/',img:'https://csu-jpg.github.io/paper_figures/chart2code.png'},
           {year:2025,title:'Vision-centric Token Compression in Large Language Model',venue:'NeurIPS 2025 Spotlight (CCF-A, Top-tier)',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Xiangbo Shu, Jinhui Tang',link:'https://arxiv.org/abs/2502.00791',img:'https://csu-jpg.github.io/paper_figures/vist.png'},
           {year:2025,title:'VaporTok: RL-Driven Adaptive Video Tokenizer with Prior & Task Awareness',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Minghao Yang, Zechen Bai, Jing Lin, Haoqian Wang, Alex Jinpeng Wang*',link:'https://arxiv.org/abs/2506.08104',img:'https://csu-jpg.github.io/paper_figures/vaportok.png'},
@@ -165,8 +165,8 @@
         ];
 
         const news = [
-          {date:'2025-10', text_en:'We released <<SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING>>, see https://arxiv.org/pdf/2510.18840 for details.', text_zh:'我们发布了 <<SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING>>，详情见 <a href="https://arxiv.org/pdf/2510.18840">ArXiv</a> 。'},
-          {date:'2025-10', text_en:'We released <<From charts to code: a hierarchical benchmark for multimodal models>>, see https://csu-jpg.github.io/Chart2Code.github.io for details.', text_zh:'我们发布了 <<从图表到代码：多模态模型的分层基准>>，详情见 <a href="https://csu-jpg.github.io/Chart2Code.github.io/">Website</a> 。'},
+          {date:'2025-10', text_en:'We released "SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING", see https://arxiv.org/pdf/2510.18840 for details.', text_zh:'我们发布了 <<SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING>>，详情见 <a href="https://arxiv.org/pdf/2510.18840">ArXiv</a> 。'},
+          {date:'2025-10', text_en:'We released "From charts to code: a hierarchical benchmark for multimodal models", see https://csu-jpg.github.io/Chart2Code.github.io for details.', text_zh:'我们发布了 <<从图表到代码：多模态模型的分层基准>>，详情见 <a href="https://csu-jpg.github.io/Chart2Code.github.io/">Website</a> 。'},
           {date:'2025-09', text_en:'Three papers accepted to NeurIPS 2025 (including one Spotlight).', text_zh:'3篇论文被 NeurIPS接收 2025（含 1Spotlight）。'},
           {date:'2025-04', text_en:'One paper accepted to ICCV 2025.', text_zh:'1篇论文被ICCV2025接收。'},
           {date:'2025-02', text_en:'Released TextAtlas5M and LongTextAR.', text_zh:'发布 TextAtlas5M 与 LongTextAR 模型。'},
@@ -174,8 +174,8 @@
         ];
 
         const openings = [{ title_en:'Spring/Fall 2026 Admissions & RA', title_zh:'2026 春/秋 招生 & RA',
-          body_en:'We are recruiting Masters/RA/Undergrad RAs in Vision-centric MLLM, long-text rendering, unified generation and understanding.',
-          body_zh:'我们长期招收硕士/RA/本科生科研助理，方向含 Vision-centric MLLM、长文本渲染、统一生成与理解。',
+          body_en:'We are recruiting RA/Undergrad RAs/Interns in Vision-centric MLLM, long-text rendering, unified generation and understanding.',
+          body_zh:'我们招收RA/本科生科研助理/实习生，方向含 Vision-centric MLLM、长文本渲染、统一生成与理解。',
           contact_en:'Send CV to: jinpengwang@csu.edu.cn (subject includes [Application])',
           contact_zh:'请发送简历至: jinpengwang@csu.edu.cn (标题包含【应聘】)'}];
 
@@ -224,6 +224,20 @@
             return ()=>io.disconnect();
           },[]);
         };
+
+
+        // 把裸 URL 自动变成可点击的 <a> 链接
+        function autoLink(s){
+          const re = /(https?:\/\/[^\s<>"')]+)(\)?)/g; // 容忍末尾右括号
+          return s.replace(re, (m, url, tail) => {
+            return `<a href="${url}" target="_blank" rel="noreferrer" class="text-blue-700 hover:underline">${url}</a>${tail||''}`;
+          });
+        }
+        // 如果已有 <a> 就直接用；否则做自动链接
+        function asHTML(s){
+          return s && s.includes('<a') ? s : autoLink(s||'');
+        }
+
 
         function Logo(){ return (
           <div className="flex items-center gap-2">
@@ -388,7 +402,15 @@
                 {/* News */}
                 <Section id="news" title={T.title_news}>
                   <div className="grid gap-4">
-                    {news.map((n,i)=>(<Card key={i}><div className="text-sm muted">{n.date} · {pick(n,'text',lang)}</div></Card>))}
+                    {news.map((n,i)=>(
+  <Card key={i}>
+    <div
+      className="text-sm muted"
+      dangerouslySetInnerHTML={{ __html: `${n.date} · ${asHTML(pick(n,'text',lang))}` }}
+    />
+  </Card>
+))}
+
                   </div>
                 </Section>
 
