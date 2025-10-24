@@ -122,7 +122,7 @@
         }
 
         // ================= 数据 =================
-        const STATS = { papers: 7, datasets: 4, members: 5 }; // 👉 改成真实数字即可
+        const STATS = { papers: 9, datasets: 5, members: 5 }; // 👉 改成真实数字即可
 
         const research = [
           { title_en:'Vision-centric Multimodal Large Language Models (MLLM)', title_zh:'以视觉为中心的多模态大模型 (Vision-centric MLLM)', href:'stories.html',
@@ -137,6 +137,7 @@
         ];
 
         const publications = [
+          {year:2025,title:'SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING',venue:'arXiv 2025',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Hongyu Qu, Zechao Li, Jinhui Tang',link:'https://arxiv.org/pdf/2510.18840',img:'https://csu-jpg.github.io/paper_figures/seetoktext.png'},
           {year:2025,title:'Chart2Code: From charts to code: a hierarchical benchmark for multimodal models',venue:'arXiv 2025',authors:'Jiahao Tang, Henry Hengyuan Zhao, Lijian Wu, Yifei Tao, Dongxing Mao, Yang Wan, Jingru Tan, Min Zeng, Min Li, Alex Jinpeng Wang',link:'https://csu-jpg.github.io/Chart2Code.github.io/',img:'https://csu-jpg.github.io/paper_figures/chart2code.png'},
           {year:2025,title:'Vision-centric Token Compression in Large Language Model',venue:'NeurIPS 2025 Spotlight (CCF-A, Top-tier)',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Xiangbo Shu, Jinhui Tang',link:'https://arxiv.org/abs/2502.00791',img:'https://csu-jpg.github.io/paper_figures/vist.png'},
           {year:2025,title:'VaporTok: RL-Driven Adaptive Video Tokenizer with Prior & Task Awareness',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Minghao Yang, Zechen Bai, Jing Lin, Haoqian Wang, Alex Jinpeng Wang*',link:'https://arxiv.org/abs/2506.08104',img:'https://csu-jpg.github.io/paper_figures/vaportok.png'},
@@ -151,7 +152,8 @@
           { name:'TextAtlas5M', brief_en:'A large-scale dense text image dataset with training split and TextAtlasEval benchmark.', brief_zh:'大规模密集文本图像生成数据集，含训练集与 TextAtlasEval 测试基准', link:'https://textatlas5m.github.io/' },
           { name:'Howto-Interlink7M', brief_en:'High-quality interleaved video–text dataset for cross-segment context.', brief_zh:'首个高质量 interleaved 视频-文本数据集，增强跨片段上下文', link:'https://arxiv.org/abs/2401.00849' },
           { name:'V-MAGE', brief_en:'Game-based visual intelligence benchmark with vision-only gameplay, extensible evaluation and adaptive Elo ranking.', brief_zh:'基于游戏的视觉智能评测：纯视觉输入、可扩展评测框架与自适应 Elo 排名。', link:'https://github.com/CSU-JPG/V-MAGE' },
-          { name:'MVPBench', brief_en:'Graph-based evaluation of multi-path visual physical chain-of-thought reasoning with multi-image inputs.', brief_zh:'面向多路径视觉物理链式推理的图结构评测，支持多图输入。', link:'https://github.com/CSU-JPG/MVPBench' }
+          { name:'MVPBench', brief_en:'Graph-based evaluation of multi-path visual physical chain-of-thought reasoning with multi-image inputs.', brief_zh:'面向多路径视觉物理链式推理的图结构评测，支持多图输入。', link:'https://github.com/CSU-JPG/MVPBench' },
+          { name:'Chart2Code', brief_en:'A new benchmark designed to evaluate chart generation capabilities of LMMs under progressively challenging conditions. ', brief_zh:'一个新基准，用于评估 LMM 在 progressively challenging 条件下的图表生成能力。', link:'https://csu-jpg.github.io/Chart2Code.github.io/' }
         ];
 
         const people = [
@@ -163,6 +165,7 @@
         ];
 
         const news = [
+          {date:'2025-10', text_en:'We released <<SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING>>, see https://arxiv.org/pdf/2510.18840 for details.', text_zh:'我们发布了 <<SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING>>，详情见 <a href="https://arxiv.org/pdf/2510.18840">ArXiv</a> 。'},
           {date:'2025-10', text_en:'We released <<From charts to code: a hierarchical benchmark for multimodal models>>, see https://csu-jpg.github.io/Chart2Code.github.io for details.', text_zh:'我们发布了 <<从图表到代码：多模态模型的分层基准>>，详情见 <a href="https://csu-jpg.github.io/Chart2Code.github.io/">Website</a> 。'},
           {date:'2025-09', text_en:'Three papers accepted to NeurIPS 2025 (including one Spotlight).', text_zh:'3篇论文被 NeurIPS接收 2025（含 1Spotlight）。'},
           {date:'2025-04', text_en:'One paper accepted to ICCV 2025.', text_zh:'1篇论文被ICCV2025接收。'},
