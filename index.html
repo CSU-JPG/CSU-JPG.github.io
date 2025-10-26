@@ -71,11 +71,12 @@
         // ================= i18n =================
         const I18N = {
           en: {
-            nav: [{id:'home',label:'Home'},{id:'research',label:'Research'},{id:'news',label:'News'},{id:'publications',label:'Publications'},{id:'datasets',label:'Datasets / Benchmark'},{id:'people',label:'People'},{id:'openings',label:'Openings'},{id:'blog',label:'Blog'},{id:'contact',label:'Contact'}],
+            nav: [{id:'home',label:'Home'},{id:'research',label:'Research'},{id:'news',label:'News'},{id:'publications',label:'Publications'},{id:'datasets',label:'Datasets'},{id:'people',label:'People'},{id:'graduates',label:'Graduated Students'},{id:'openings',label:'Openings'},{id:'blog',label:'Blog'},{id:'contact',label:'Contact'}],
             title_home:'CSU-JPG Lab',
+            title_graduates:'Graduated Students',
             intro:'We focus on Vision-centric Multimodal Large Language Models (MLLMs) and Data-centric AI: vision-language pretraining, interleaved long context, long-text image generation & understanding.',
-            hero_kpi:[{label:'Publications',key:'papers'},{label:'Open Datasets/Benchmarks',key:'datasets'},{label:'Core Members',key:'members'}],
-            title_research:'Research', title_news:'News', title_publications:'Publications', title_datasets:'Datasets / Benchmark', title_people:'People', title_openings:'Openings', title_blog:'Blog', title_contact:'Contact',
+            hero_kpi:[{label:'Publications',key:'papers'},{label:'Open Datasets',key:'datasets'},{label:'Core Members',key:'members'}],
+            title_research:'Research', title_news:'News', title_publications:'Publications', title_datasets:'Datasets', title_people:'People', title_openings:'Openings', title_blog:'Blog', title_contact:'Contact',
             search_placeholder:'Search title/authors/venue…', filter_all:'All', total_fmt:n=>`Total ${n} items`,
             card_homepage:'Homepage', contact_addr_label:'Address', contact_addr:'School of Computer Science, Central South University · CSU-JPG Lab',
             contact_email_label:'Email', contact_social_label:'Social', footer:y=>`© ${y} CSU-JPG Lab.`,
@@ -85,8 +86,9 @@
             clear:'Clear', copy:'Copy', copied:'Copied!'
           },
           zh: {
-            nav: [{id:'home',label:'主页'},{id:'research',label:'研究方向'},{id:'news',label:'新闻'},{id:'publications',label:'论文'},{id:'datasets',label:'数据集 / Benchmark'},{id:'people',label:'成员'},{id:'openings',label:'招生/招聘'},{id:'blog',label:'Blog'},{id:'contact',label:'联系'}],
+            nav: [{id:'home',label:'主页'},{id:'research',label:'研究方向'},{id:'news',label:'新闻'},{id:'publications',label:'论文'},{id:'datasets',label:'数据集 / Benchmark'},{id:'people',label:'成员'},{id:'graduates',label:'毕业学生'},{id:'openings',label:'招生/招聘'},{id:'blog',label:'Blog'},{id:'contact',label:'联系'}],
             title_home:'CSU-JPG 实验室',
+            title_graduates:'毕业学生',
             intro:'我们专注于以视觉为中心的多模态大模型（Vision-centric MLLM）与数据中心 AI：视觉-语言预训练、Interleaved 长上下文、长文本图像生成与理解、OR 推理。',
             hero_kpi:[{label:'论文',key:'papers'},{label:'开放数据/基准',key:'datasets'},{label:'核心成员',key:'members'}],
             title_research:'研究方向', title_news:'新闻', title_publications:'论文', title_datasets:'数据集 / Benchmark', title_people:'成员', title_openings:'招生/招聘', title_blog:'Blog', title_contact:'联系',
@@ -164,9 +166,13 @@
           {name:'Suyang Hou',role_en:'Master',role_zh:'Master',url:'github.com/SuyangLumiere',avatar:'https://csu-jpg.github.io/person_figures/suyang_hou.jpg'}
         ];
 
+        const graduate_students = [
+          {name:'Zhuo Bai',role_en:'Undergraduate Student',role_zh:'本科生',url:'https://zhuobaidong.github.io/',avatar:'https://zhuobai.github.io/assets/images/zhuobai.jpg'},
+        ];
+
         const news = [
-          {date:'2025-10', text_en:'We released "SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING", see https://arxiv.org/pdf/2510.18840 for details.', text_zh:'我们发布了 <<SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING>>，详情见 <a href="https://arxiv.org/pdf/2510.18840">ArXiv</a> 。'},
-          {date:'2025-10', text_en:'We released "From charts to code: a hierarchical benchmark for multimodal models", see https://csu-jpg.github.io/Chart2Code.github.io for details.', text_zh:'我们发布了 <<从图表到代码：多模态模型的分层基准>>，详情见 <a href="https://csu-jpg.github.io/Chart2Code.github.io/">Website</a> 。'},
+          {date:'2025-10', text_en:'We released "SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING", see https://arxiv.org/pdf/2510.18840 for details.', text_zh:'我们发布了 SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING，详情见 <a href="https://arxiv.org/pdf/2510.18840">ArXiv</a> 。'},
+          {date:'2025-10', text_en:'We released "From charts to code: a hierarchical benchmark for multimodal models", see https://csu-jpg.github.io/Chart2Code.github.io for details.', text_zh:'我们发布了 “从图表到代码：多模态模型的分层基准”，详情见 <a href="https://csu-jpg.github.io/Chart2Code.github.io/">Website</a> 。'},
           {date:'2025-09', text_en:'Three papers accepted to NeurIPS 2025 (including one Spotlight).', text_zh:'3篇论文被 NeurIPS接收 2025（含 1Spotlight）。'},
           {date:'2025-04', text_en:'One paper accepted to ICCV 2025.', text_zh:'1篇论文被ICCV2025接收。'},
           {date:'2025-02', text_en:'Released TextAtlas5M and LongTextAR.', text_zh:'发布 TextAtlas5M 与 LongTextAR 模型。'},
@@ -463,6 +469,26 @@
                 <Section id="people" title={T.title_people}>
                   <div className="grid md:grid-cols-3 gap-4">
                     {people.map((p,i)=>(
+                      <Card key={i}>
+                        <div className="flex items-center gap-3">
+                          {p.avatar ? (<img src={p.avatar} alt={p.name} className="h-12 w-12 rounded-full object-cover border"/>) :
+                            (<div className="h-12 w-12 rounded-full border bg-neutral-100 flex items-center justify-center text-sm font-semibold">{p.name[0]}</div>)}
+                          <div>
+                            <div className="font-semibold">{p.name}</div>
+                            <div className="text-sm muted">{pick(p,'role',lang)}</div>
+                            {p.url && <a href={p.url} target="_blank" className="text-xs text-blue-700 hover:underline mt-1 inline-block">{T.card_homepage}</a>}
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </Section>
+
+
+                {/* Graduated Students */}
+                <Section id="graduates" title={T.title_graduates}>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    {graduate_students.map((p,i)=>(
                       <Card key={i}>
                         <div className="flex items-center gap-3">
                           {p.avatar ? (<img src={p.avatar} alt={p.name} className="h-12 w-12 rounded-full object-cover border"/>) :
