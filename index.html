@@ -124,8 +124,6 @@
         }
 
         // ================= 数据 =================
-        const STATS = { papers: 10, datasets: 5, members: 5 }; // 👉 改成真实数字即可
-
         const research = [
           { title_en:'Vision-centric Multimodal Large Language Models (MLLM)', title_zh:'以视觉为中心的多模态大模型 (Vision-centric MLLM)', href:'#blog',
             desc_en:'Vision-first unification, interleaved long context.',
@@ -166,6 +164,13 @@
           {name:'Songjie Wu',role_en:'Master',role_zh:'Master',url:'https://songjiewu1.github.io/',avatar:'https://csu-jpg.github.io/person_figures/songjie_wu.jpg'},
           {name:'Suyang Hou',role_en:'Master',role_zh:'Master',url:'github.com/SuyangLumiere',avatar:'https://csu-jpg.github.io/person_figures/suyang_hou.jpg'}
         ];
+
+        // 自动计算统计数据（从数组长度获取）
+        const STATS = { 
+          papers: publications.length, 
+          datasets: datasets.length, 
+          members: people.length 
+        };
 
         const graduate_students = [
           {name:'Zhuo Bai',role_en:'Undergraduate Student',role_zh:'本科生',url:'https://zhuobaidong.github.io/',avatar:'https://csu-jpg.github.io/person_figures/zhuobai.jpg'},
