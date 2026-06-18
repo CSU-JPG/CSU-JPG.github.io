@@ -60,8 +60,15 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+      // Babel 7.22+ 默认用 automatic JSX runtime，会生成 import 语句，
+      // 浏览器内联 script 无法执行，导致页面空白。改用 classic runtime。
+      Babel.registerPreset('react-classic', {
+        presets: [[Babel.availablePresets['react'], { runtime: 'classic' }]]
+      });
+    </script>
 
-    <script type="text/babel" data-presets="env,react">
+    <script type="text/babel" data-presets="react-classic">
       function safeMount(fn){ try { fn(); } catch(e){ console.error('[MountError]', e); } }
       function whenReady(cb){ if (document.readyState==='complete'||document.readyState==='interactive'){cb();} else document.addEventListener('DOMContentLoaded',cb,{once:true}); }
 
@@ -78,7 +85,7 @@
             hero_kpi:[{label:'Publications',key:'papers'},{label:'Open Datasets',key:'datasets'},{label:'Core Members',key:'members'}],
             title_research:'Research', title_news:'News', title_publications:'Publications', title_datasets:'Datasets', title_people:'People', title_openings:'Openings', title_blog:'Blog', title_contact:'Contact',
             search_placeholder:'Search title/authors/venue…', filter_all:'All', total_fmt:n=>`Total ${n} items`,
-            card_homepage:'Homepage', contact_addr_label:'Address', contact_addr:'School of Computer Science, Central South University · CSU-JPG Lab',
+            card_homepage:'Homepage', card_paper:'Paper', card_code:'Code', contact_addr_label:'Address', contact_addr:'School of Computer Science, Central South University · CSU-JPG Lab',
             contact_email_label:'Email', contact_social_label:'Social', footer:y=>`© ${y} CSU-JPG Lab.`,
             lang_toggle_en:'EN', lang_toggle_zh:'中文',
             blog_card_title:'Stories: People See Text, But LLM Not',
@@ -93,7 +100,7 @@
             hero_kpi:[{label:'论文',key:'papers'},{label:'开放数据/基准',key:'datasets'},{label:'核心成员',key:'members'}],
             title_research:'研究方向', title_news:'新闻', title_publications:'论文', title_datasets:'数据集 / Benchmark', title_people:'成员', title_openings:'招生/招聘', title_blog:'Blog', title_contact:'联系',
             search_placeholder:'搜索标题/作者/会议…', filter_all:'全部', total_fmt:n=>`共 ${n} 篇`,
-            card_homepage:'主页 / Homepage', contact_addr_label:'地址', contact_addr:'中南大学 · 计算机学院 · CSU-JPG 实验室',
+            card_homepage:'主页 / Homepage', card_paper:'论文', card_code:'代码', contact_addr_label:'地址', contact_addr:'中南大学 · 计算机学院 · CSU-JPG 实验室',
             contact_email_label:'邮箱', contact_social_label:'社交', footer:y=>`© ${y} CSU-JPG Lab.`,
             lang_toggle_en:'EN', lang_toggle_zh:'中文',
             blog_card_title:'Stories：People See Text, But LLM Not',
@@ -137,21 +144,21 @@
         ];
         
         const publications = [
-          {year:2026,title:'When the Prompt Becomes Visual: Vision-Centric Jailbreak Attacks for Large Image Editing Models', venue:'ICML 2026 Oral (CCF-A, Top-tier)',authors:'Jiacheng Hou, Yining Sun, Ruochong Jin, Haochen Han, Fangming Liu, Wai Kin Victor Chan, Alex Jinpeng Wang*',link:'https://arxiv.org/pdf/2602.10179',img:'https://csu-jpg.github.io/paper_figures/VJA.png'},
-          {year:2026,title:'Entropy-Aware Dynamic KV Cache Sparsification for Autoregressive Image Generation and Editing', venue:'ICML 2026 (CCF-A, Top-tier)',authors:'Tong Tong, Ling Xing, Linjie Li, Rui Yan, Zhengyuan Yang, Lijuan Wang, Alex Jinpeng Wang*',link:'https://arxiv.org/pdf/xxx',img:'https://csu-jpg.github.io/paper_figures/sparseAR.png'},
-          {year:2026,title:'TextAtlas5M: A Large-scale Dataset for Dense Text Image Generation',venue:'ICML 2026 (CCF-A, Top-tier)',authors:'Dongxing Mao, Alex Jinpeng Wang*, Jiawei Zhang, Weiming Han, Zhuobai Dong, Linjie Li, Yiqi Lin, Zhengyuan Yang, Libo Qin, Fuwei Zhang, Lijuan Wang, Min Li',link:'https://textatlas5m.github.io/',img:'https://fingerrec.github.io/index_files/jinpeng/papers/TEXTATLAS5M2025/intro.png'},
-          {year:2026,title:'Residual Decoder Adapter: ID-Preserving Tokenizer Adaption for Autoregressive Text Rendering', venue: 'CVPR 2026 (CCF-A, Top-tier)',authors:'Dongxing Mao, Alex Jinpeng Wang*, Jiahao Tang, Kevin Qinghong Lin,Linjie Li, Zhengyuan Yang, Lijuan Wang, Min Li, Jingru Tan',link:'https://arxiv.org/abs/xxx',img:'https://csu-jpg.github.io/paper_figures/residual_vq.png'},
+          {year:2026,title:'Glance: One Sample Distillation Model',venue:'ECCV 2026 (Top-tier)',authors:'Zhuobai Dong, Rui Zhao, Songjie Wu, Junchao Yi, Linjie Li, Zhengyuan Yang, Lijuan Wang, Alex Jinpeng Wang*',link:'https://zhuobaidong.github.io/Glance/',code:'https://github.com/CSU-JPG/Glance',img:'https://csu-jpg.github.io/paper_figures/glance.png'},
+          {year:2026,title:'FlowInOne: Unifying Multimodal Generation as Image-in, Image-out Flow Matching',venue:'ECCV 2026 (Top-tier)',authors:'J Yi, R Zhao, J Tang, W Lei, L Li, Q Su, Z Yang, L Wang, X Zhu, AJ Wang*',link:'https://arxiv.org/pdf/2604.06757',code:'https://github.com/CSU-JPG/FlowInOne',img:'https://csu-jpg.github.io/paper_figures/flowinone.png'},
+          {year:2026,title:'When the Prompt Becomes Visual: Vision-Centric Jailbreak Attacks for Large Image Editing Models', venue:'ICML 2026 Oral (CCF-A, Top-tier)',authors:'Jiacheng Hou, Yining Sun, Ruochong Jin, Haochen Han, Fangming Liu, Wai Kin Victor Chan, Alex Jinpeng Wang*',link:'https://arxiv.org/pdf/2602.10179',code:'https://github.com/CSU-JPG/VJA',img:'https://csu-jpg.github.io/paper_figures/VJA.png'},
+          {year:2026,title:'Entropy-Aware Dynamic KV Cache Sparsification for Autoregressive Image Generation and Editing', venue:'ICML 2026 (CCF-A, Top-tier)',authors:'Tong Tong, Ling Xing, Linjie Li, Rui Yan, Zhengyuan Yang, Lijuan Wang, Alex Jinpeng Wang*',link:'https://arxiv.org/pdf/xxx',code:'https://github.com/lilitong7/SparseAR-ICML-2026',img:'https://csu-jpg.github.io/paper_figures/sparseAR.png'},
+          {year:2026,title:'TextAtlas5M: A Large-scale Dataset for Dense Text Image Generation',venue:'ICML 2026 (CCF-A, Top-tier)',authors:'Dongxing Mao, Alex Jinpeng Wang*, Jiawei Zhang, Weiming Han, Zhuobai Dong, Linjie Li, Yiqi Lin, Zhengyuan Yang, Libo Qin, Fuwei Zhang, Lijuan Wang, Min Li',link:'https://textatlas5m.github.io/',code:'https://github.com/CSU-JPG/TextAtlas',img:'https://fingerrec.github.io/index_files/jinpeng/papers/TEXTATLAS5M2025/intro.png'},
+          {year:2026,title:'Residual Decoder Adapter: ID-Preserving Tokenizer Adaption for Autoregressive Text Rendering', venue: 'CVPR 2026 (CCF-A, Top-tier)',authors:'Dongxing Mao, Alex Jinpeng Wang*, Jiahao Tang, Kevin Qinghong Lin,Linjie Li, Zhengyuan Yang, Lijuan Wang, Min Li, Jingru Tan',link:'https://arxiv.org/abs/xxx',code:'https://github.com/CSU-JPG/RDA',img:'https://csu-jpg.github.io/paper_figures/residual_vq.png'},
           {year:2026,title:'OR-PRM: A Process Reward Model for Algorithmic Problem in Operations Research',venue:'ICLR 2026 (CCF-A, Top-tier)',authors:'Yilin Wang, Heng Zhou, Dongxing Mao, Linjie Li, Jingru Tan, Haochen Han, Zhengyuan Yang, Alex Jinpeng Wang*, Min Li',link:'https://openreview.net/pdf?id=tFEAzYdz92',img:'https://csu-jpg.github.io/paper_figures/or_prm.png'},
-          {year:2026,title:'Chart2Code: From charts to code: a hierarchical benchmark for multimodal models',venue:'ACL 2026 (CCF-A, Top-tier)',authors:'Jiahao Tang, Henry Hengyuan Zhao, Lijian Wu, Yifei Tao, Dongxing Mao, Yang Wan, Jingru Tan, Min Zeng, Min Li, Alex Jinpeng Wang*',link:'https://csu-jpg.github.io/Chart2Code.github.io/',img:'https://csu-jpg.github.io/paper_figures/chart2code.png'},
-          {year:2025,title:'Glance: One Sample Distillation Model',venue:'arXiv 2025',authors:'Zhuobai Dong, Rui Zhao, Songjie Wu, Junchao Yi, Linjie Li, Zhengyuan Yang, Lijuan Wang, Alex Jinpeng Wang*',link:'https://zhuobaidong.github.io/Glance/',img:'https://csu-jpg.github.io/paper_figures/glance.png'},
-          {year:2026,title:'VCode: a Multimodal Coding Benchmark with SVG as Symbolic Visual Representation',venue:'CVPR 2026 Workshop',authors:'Kevin Qinghong Lin, Yuhao Zheng, Hangyu Ran, Dantong Zhu, Dongxing Mao, Linjie Li, Philip Torr, Alex Jinpeng Wang*',link:'https://csu-jpg.github.io/VCode/',img:'https://csu-jpg.github.io/paper_figures/codevqa.png'},
+          {year:2026,title:'Chart2Code: From charts to code: a hierarchical benchmark for multimodal models',venue:'ACL 2026 (CCF-A, Top-tier)',authors:'Jiahao Tang, Henry Hengyuan Zhao, Lijian Wu, Yifei Tao, Dongxing Mao, Yang Wan, Jingru Tan, Min Zeng, Min Li, Alex Jinpeng Wang*',link:'https://csu-jpg.github.io/Chart2Code.github.io/',code:'https://github.com/CSU-JPG/Chart2Code',img:'https://csu-jpg.github.io/paper_figures/chart2code.png'},
+          {year:2026,title:'VCode: a Multimodal Coding Benchmark with SVG as Symbolic Visual Representation',venue:'CVPR 2026 Workshop',authors:'Kevin Qinghong Lin, Yuhao Zheng, Hangyu Ran, Dantong Zhu, Dongxing Mao, Linjie Li, Philip Torr, Alex Jinpeng Wang*',link:'https://csu-jpg.github.io/VCode/',code:'https://github.com/CSU-JPG/VCode',img:'https://csu-jpg.github.io/paper_figures/codevqa.png'},
           {year:2025,title:'SEE THE TEXT: FROM TOKENIZATION TO VISUAL READING',venue:'arXiv 2025',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Hongyu Qu, Zechao Li, Jinhui Tang',link:'https://arxiv.org/pdf/2510.18840',img:'https://csu-jpg.github.io/paper_figures/seetok.png'},
-          {year:2025,title:'Vision-centric Token Compression in Large Language Model',venue:'NeurIPS 2025 Spotlight (CCF-A, Top-tier)',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Xiangbo Shu, Jinhui Tang',link:'https://arxiv.org/abs/2502.00791',img:'https://csu-jpg.github.io/paper_figures/vist.png'},
+          {year:2025,title:'Vision-centric Token Compression in Large Language Model',venue:'NeurIPS 2025 Spotlight (CCF-A, Top-tier)',authors:'Ling Xing, Alex Jinpeng Wang*, Rui Yan, Xiangbo Shu, Jinhui Tang',link:'https://arxiv.org/abs/2502.00791',code:'https://github.com/CSU-JPG/VIST',img:'https://csu-jpg.github.io/paper_figures/vist.png'},
           {year:2025,title:'VaporTok: RL-Driven Adaptive Video Tokenizer with Prior & Task Awareness',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Minghao Yang, Zechen Bai, Jing Lin, Haoqian Wang, Alex Jinpeng Wang*',link:'https://arxiv.org/abs/2506.08104',img:'https://csu-jpg.github.io/paper_figures/vaportok.png'},
           {year:2025,title:'Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought',venue:'NeurIPS 2025 (CCF-A, Top-tier)',authors:'Zihui Cheng, Qiguang Chen, Xiao Xu, Jiaqi Wang, Weiyun Wang, Hao Fei, Yidong Wang, Alex Jinpeng Wang*, Zhi Chen, Wanxiang Che, Libo Qin',link:'https://arxiv.org/abs/2505.15510',img:'https://csu-jpg.github.io/paper_figures/visual_thought.png'},
-          {year:2025,title:'Unlearning the Noisy Correspondence Makes CLIP More Robust',venue:'ICCV 2025 (CCF-A, Top-tier)',authors:'Haochen Han, Alex Jinpeng Wang*, Peijun Ye, Fangming Liu',link:'https://arxiv.org/abs/2507.03434',img:'https://csu-jpg.github.io/paper_figures/unlearning.png'},
-          {year:2025,title:'Beyond Words: Advancing Long-Text Image Generation via Multimodal Autoregressive Models',venue:'arXiv 2025',authors:'Alex Jinpeng Wang*, Linjie Li, Zhengyuan Yang, Lijuan Wang, Min Li',link:'https://arxiv.org/abs/2503.20198',img:'https://fingerrec.github.io/index_files/jinpeng/papers/longtextar2025/main_ppl.png'},
-          {year:2024,title:'Leveraging Visual Tokens for Extended Text Contexts in Multi-Modal Learning',venue:'NeurIPS 2024 (CCF-A, Top-tier)',authors:'Alex Jinpeng Wang*, Linjie Li, Yiqi Lin, Min Li, Lijuan Wang, Mike Zheng Shou',link:'https://arxiv.org/abs/2406.02547',img:'https://fingerrec.github.io/index_files/jinpeng/papers/ARXIV2024/motivation.png'}
+          {year:2025,title:'Unlearning the Noisy Correspondence Makes CLIP More Robust',venue:'ICCV 2025 (CCF-A, Top-tier)',authors:'Haochen Han, Alex Jinpeng Wang*, Peijun Ye, Fangming Liu',link:'https://arxiv.org/abs/2507.03434',code:'https://github.com/hhc1997/NCU',img:'https://csu-jpg.github.io/paper_figures/unlearning.png'},
+          {year:2024,title:'Leveraging Visual Tokens for Extended Text Contexts in Multi-Modal Learning',venue:'NeurIPS 2024 (CCF-A, Top-tier)',authors:'Alex Jinpeng Wang*, Linjie Li, Yiqi Lin, Min Li, Lijuan Wang, Mike Zheng Shou',link:'https://arxiv.org/abs/2406.02547',code:'https://github.com/showlab/visincontext',img:'https://fingerrec.github.io/index_files/jinpeng/papers/ARXIV2024/motivation.png'}
         ];
 
         const datasets = [
@@ -166,8 +173,8 @@
           {name:'Alex Jinpeng Wang (王金鹏)',role_en:'PI / Tenure-track Professor, CSU',role_zh:'PI / CSU 计算机学院 · Tenure-track Professor',url:'https://fingerrec.github.io',avatar:'https://fingerrec.github.io/index_files/jinpeng/my_photo_2.jpg'},
           {name:'Dongxing Mao',role_en:'RA',role_zh:'RA',url:'https://scholar.google.com/citations?user=RLVSYY0AAAAJ&hl=en',avatar:'https://csu-jpg.github.io/person_figures/dongxing_mao.jpg'},
           {name:'Jiahao Tang',role_en:'RA',role_zh:'RA',url:'https://github.com/accebet',avatar:'https://csu-jpg.github.io/person_figures/jiahao_tang.jpg'},
-          {name:'Songjie Wu',role_en:'Master',role_zh:'Master',url:'https://songjiewu1.github.io/',avatar:'https://csu-jpg.github.io/person_figures/songjie_wu.jpg'},
-          {name:'Suyang Hou',role_en:'Master',role_zh:'Master',url:'github.com/SuyangLumiere',avatar:'https://csu-jpg.github.io/person_figures/suyang_hou.jpg'}
+          // {name:'Songjie Wu',role_en:'Master',role_zh:'Master',url:'https://songjiewu1.github.io/',avatar:'https://csu-jpg.github.io/person_figures/songjie_wu.jpg'},
+          // {name:'Suyang Hou',role_en:'Master',role_zh:'Master',url:'github.com/SuyangLumiere',avatar:'https://csu-jpg.github.io/person_figures/suyang_hou.jpg'}
         ];
 
         // 自动计算统计数据（从数组长度获取）
@@ -463,8 +470,12 @@
                           {p.img ? (<img src={p.img} alt={p.title} loading="lazy" className="h-16 w-28 rounded border object-cover flex-none"/>) :
                             (<div className="h-16 w-28 rounded border bg-neutral-100 flex items-center justify-center text-xs text-neutral-500 flex-none">No Image</div>)}
                           <div>
-                            <a href={p.link} target="_blank" className="font-semibold text-blue-700 hover:underline">{p.title}</a>
+                            <a href={p.link} target="_blank" rel="noreferrer" className="font-semibold text-blue-700 hover:underline">{p.title}</a>
                             <div className="text-sm muted mt-1">{p.authors} · {p.venue} · {p.year}</div>
+                            <div className="flex flex-wrap gap-3 mt-1.5 text-xs">
+                              <a href={p.link} target="_blank" rel="noreferrer" className="text-blue-700 hover:underline">{T.card_paper}</a>
+                              {p.code && <a href={p.code} target="_blank" rel="noreferrer" className="text-blue-700 hover:underline">{T.card_code}</a>}
+                            </div>
                           </div>
                         </div>
                       </Card>
@@ -534,7 +545,7 @@
                         <div className="text-xs muted mt-1 flex items-center gap-2">
                           {pick(o,'contact',lang)}
                           <button className="px-2 py-0.5 rounded border hover:bg-neutral-100"
-                                  onClick={()=>{navigator.clipboard.writeText('jinpengwang@csu.edu.cn'); const btn=event.currentTarget; const txt=btn.textContent; btn.textContent=I18N[lang].copied; setTimeout(()=>btn.textContent=I18N[lang].copy,1000);}}>
+                                  onClick={(e)=>{navigator.clipboard.writeText('jinpengwang@csu.edu.cn'); const btn=e.currentTarget; btn.textContent=I18N[lang].copied; setTimeout(()=>btn.textContent=I18N[lang].copy,1000);}}>
                             {I18N[lang].copy}
                           </button>
                         </div>
