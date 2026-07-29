@@ -51,6 +51,11 @@
       .dark body { background-color: #0a0a0a; color: #e5e5e5; }
       .dark .card { background-color: #0f0f0f; border-color: #262626; }
       .dark .muted { color: #9ca3af; }
+      /* ---- gallery lightbox ---- */
+      .lightbox { position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.82); display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+      .lightbox img { max-width: min(96vw, 1100px); max-height: 88vh; object-fit: contain; border-radius: 0.75rem; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+      .gallery-thumb { cursor: zoom-in; transition: transform .2s ease, opacity .2s ease; }
+      .gallery-thumb:hover { transform: translateY(-2px); opacity: .95; }
     </style>
   </head>
   <body class="bg-white text-neutral-900">
@@ -78,33 +83,35 @@
         // ================= i18n =================
         const I18N = {
           en: {
-            nav: [{id:'home',label:'Home'},{id:'research',label:'Research'},{id:'news',label:'News'},{id:'publications',label:'Publications'},{id:'datasets',label:'Datasets'},{id:'people',label:'People'},{id:'graduates',label:'Graduated Students'},{id:'openings',label:'Openings'},{id:'blog',label:'Blog'},{id:'contact',label:'Contact'}],
+            nav: [{id:'home',label:'Home'},{id:'research',label:'Research'},{id:'news',label:'News'},{id:'publications',label:'Publications'},{id:'datasets',label:'Datasets'},{id:'people',label:'People'},{id:'graduates',label:'Graduated Students'},{id:'gallery',label:'Gallery'},{id:'openings',label:'Openings'},{id:'blog',label:'Blog'},{id:'contact',label:'Contact'}],
             title_home:'CSU-JPG Lab',
             title_graduates:'Graduated Students',
             intro:'We focus on Vision-centric Multimodal Large Language Models (MLLMs), Embodied AI, and Data-centric AI: vision-language pretraining, interleaved long context, long-text image generation & understanding.',
             hero_kpi:[{label:'Publications',key:'papers'},{label:'Open Datasets',key:'datasets'},{label:'Core Members',key:'members'}],
-            title_research:'Research', title_news:'News', title_publications:'Publications', title_datasets:'Datasets', title_people:'People', title_openings:'Openings', title_blog:'Blog', title_contact:'Contact',
+            title_research:'Research', title_news:'News', title_publications:'Publications', title_datasets:'Datasets', title_people:'People', title_gallery:'Gallery', title_openings:'Openings', title_blog:'Blog', title_contact:'Contact',
             search_placeholder:'Search title/authors/venue…', filter_all:'All', total_fmt:n=>`Total ${n} items`,
             card_homepage:'Homepage', card_paper:'Paper', card_code:'Code', contact_addr_label:'Address', contact_addr:'School of Computer Science, Central South University · CSU-JPG Lab',
             contact_email_label:'Email', contact_social_label:'Social', footer:y=>`© ${y} CSU-JPG Lab.`,
             lang_toggle_en:'EN', lang_toggle_zh:'中文',
             blog_card_title:'Stories: People See Text, But LLM Not',
             blog_card_desc:'Published on 2025-10-21 · Our exploration of the gap between human and LLM visual perception of text',
+            gallery_empty:'Lab photos coming soon — drop images into the gallery/ folder and add entries in the gallery list.',
             clear:'Clear', copy:'Copy', copied:'Copied!'
           },
           zh: {
-            nav: [{id:'home',label:'主页'},{id:'research',label:'研究方向'},{id:'news',label:'新闻'},{id:'publications',label:'论文'},{id:'datasets',label:'数据集 / Benchmark'},{id:'people',label:'成员'},{id:'graduates',label:'毕业学生'},{id:'openings',label:'招生/招聘'},{id:'blog',label:'Blog'},{id:'contact',label:'联系'}],
+            nav: [{id:'home',label:'主页'},{id:'research',label:'研究方向'},{id:'news',label:'新闻'},{id:'publications',label:'论文'},{id:'datasets',label:'数据集 / Benchmark'},{id:'people',label:'成员'},{id:'graduates',label:'毕业学生'},{id:'gallery',label:'相册'},{id:'openings',label:'招生/招聘'},{id:'blog',label:'Blog'},{id:'contact',label:'联系'}],
             title_home:'CSU-JPG 实验室',
             title_graduates:'毕业学生',
             intro:'我们专注于以视觉为中心的多模态大模型（Vision-centric MLLM）、具身 AI 与数据中心 AI：视觉-语言预训练、Interleaved 长上下文、长文本图像生成与理解、OR 推理。',
             hero_kpi:[{label:'论文',key:'papers'},{label:'开放数据/基准',key:'datasets'},{label:'核心成员',key:'members'}],
-            title_research:'研究方向', title_news:'新闻', title_publications:'论文', title_datasets:'数据集 / Benchmark', title_people:'成员', title_openings:'招生/招聘', title_blog:'Blog', title_contact:'联系',
+            title_research:'研究方向', title_news:'新闻', title_publications:'论文', title_datasets:'数据集 / Benchmark', title_people:'成员', title_gallery:'相册', title_openings:'招生/招聘', title_blog:'Blog', title_contact:'联系',
             search_placeholder:'搜索标题/作者/会议…', filter_all:'全部', total_fmt:n=>`共 ${n} 篇`,
             card_homepage:'主页 / Homepage', card_paper:'论文', card_code:'代码', contact_addr_label:'地址', contact_addr:'中南大学 · 计算机学院 · CSU-JPG 实验室',
             contact_email_label:'邮箱', contact_social_label:'社交', footer:y=>`© ${y} CSU-JPG Lab.`,
             lang_toggle_en:'EN', lang_toggle_zh:'中文',
             blog_card_title:'Stories：People See Text, But LLM Not',
             blog_card_desc:'发布于 2025-10-21 · 我们探索人类与 LLM 在文本视觉感知上的差距',
+            gallery_empty:'相册即将更新 —— 将合照放入 gallery/ 目录，并在 gallery 列表中添加条目。',
             clear:'清除', copy:'复制', copied:'已复制'
           }
         };
@@ -211,6 +218,17 @@
           body_zh:'我们招收博士/RA/本科生科研助理/实习生，方向含 Vision-centric MLLM、长文本渲染、统一生成与理解。',
           contact_en:'Send CV to: jinpengwang@csu.edu.cn (subject includes [Application])',
           contact_zh:'请发送简历至: jinpengwang@csu.edu.cn (标题包含【应聘】)'}];
+
+        // Lab gallery photos — put image files under gallery/, then add entries here.
+        // Example: {src:'gallery/lab_2025_spring.jpg', date:'2025-03', caption_en:'Lab group photo, Spring 2025', caption_zh:'实验室合照 · 2025 春'}
+        const gallery = [
+          {src:'gallery/icml2026_group.jpg', date:'2026-07', caption_en:'CSU-JPG at ICML 2026 · Seoul', caption_zh:'CSU-JPG 实验室合照 · ICML 2026 首尔'},
+          {src:'gallery/icml2026_dinner.jpg', date:'2026-07', caption_en:'Lab dinner at ICML 2026 · Seoul', caption_zh:'ICML 2026 实验室聚餐 · 首尔'},
+          {src:'gallery/icml2026_vja_poster.jpg', date:'2026-07', caption_en:'VJA Oral poster at ICML 2026', caption_zh:'VJA Oral Poster · ICML 2026'},
+          {src:'gallery/icml2026_textatlas_poster.jpg', date:'2026-07', caption_en:'TextAtlas5M poster at ICML 2026', caption_zh:'TextAtlas5M Poster · ICML 2026'},
+          {src:'gallery/icml2026_sparsear_poster.jpg', date:'2026-07', caption_en:'SparseAR poster at ICML 2026', caption_zh:'SparseAR Poster · ICML 2026'},
+          {src:'gallery/icml2026_talk.jpg', date:'2026-07', caption_en:'ICML 2026 talk · Image editing models', caption_zh:'ICML 2026 报告 · 图像编辑模型'},
+        ];
 
         // ===== utils =====
         function deriveThumb(link){ try{const u=new URL(link); if(u.hostname.includes('arxiv.org')) return 'https://upload.wikimedia.org/wikipedia/commons/9/95/ArXiv_logo_2022.svg';}catch(e){} return ''; }
@@ -324,6 +342,16 @@
             onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
             return ()=>window.removeEventListener('scroll', onScroll);
           },[]);
+
+          // gallery lightbox
+          const [lightbox,setLightbox] = useState(null);
+          useEffect(()=>{
+            if(!lightbox) return;
+            const onKey = (e)=>{ if(e.key==='Escape') setLightbox(null); };
+            document.addEventListener('keydown', onKey);
+            document.body.style.overflow = 'hidden';
+            return ()=>{ document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+          },[lightbox]);
 
           // ===== KPI 计数动画（修复版：state + 可见时触发）=====
           const [kpi, setKpi] = useState({papers:0,datasets:0,members:0});
@@ -535,6 +563,29 @@
                   </div>
                 </Section>
 
+                {/* Gallery */}
+                <Section id="gallery" title={T.title_gallery}>
+                  {gallery.length === 0 ? (
+                    <Card><div className="text-sm muted">{T.gallery_empty}</div></Card>
+                  ) : (
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {gallery.map((g,i)=>(
+                        <button key={i} type="button" onClick={()=>setLightbox(g)}
+                                className="gallery-thumb text-left rounded-2xl border border-theme surface overflow-hidden shadow-sm">
+                          <img src={g.src} alt={pick(g,'caption',lang) || 'Lab photo'} loading="lazy"
+                               className="w-full aspect-[4/3] object-cover bg-neutral-100"/>
+                          {(g.date || pick(g,'caption',lang)) && (
+                            <div className="px-3 py-2.5">
+                              {g.date && <div className="text-xs muted">{g.date}</div>}
+                              {pick(g,'caption',lang) && <div className="text-sm mt-0.5">{pick(g,'caption',lang)}</div>}
+                            </div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </Section>
+
                 {/* Openings */}
                 <Section id="openings" title={T.title_openings}>
                   <div className="grid gap-4">
@@ -585,6 +636,24 @@
                         className="fixed bottom-6 right-6 rounded-full shadow-lg border bg-white px-4 py-2 hover:bg-neutral-100">
                   ↑
                 </button>
+              )}
+
+              {/* Gallery lightbox */}
+              {lightbox && (
+                <div className="lightbox" onClick={()=>setLightbox(null)} role="dialog" aria-modal="true">
+                  <div className="relative max-w-full" onClick={e=>e.stopPropagation()}>
+                    <button type="button" onClick={()=>setLightbox(null)}
+                            className="absolute -top-10 right-0 text-white/90 text-sm hover:text-white">✕ Close</button>
+                    <img src={lightbox.src} alt={pick(lightbox,'caption',lang) || 'Lab photo'}/>
+                    {(lightbox.date || pick(lightbox,'caption',lang)) && (
+                      <div className="mt-3 text-center text-sm text-white/90">
+                        {lightbox.date && <span>{lightbox.date}</span>}
+                        {lightbox.date && pick(lightbox,'caption',lang) && <span> · </span>}
+                        {pick(lightbox,'caption',lang)}
+                      </div>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
           );
