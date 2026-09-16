@@ -87,7 +87,7 @@
             title_home:'CSU-JPG Lab',
             title_graduates:'Graduated Students',
             intro:'We focus on Vision-centric Multimodal Large Language Models (MLLMs), Embodied AI, and Data-centric AI: vision-language pretraining, interleaved long context, long-text image generation & understanding.',
-            hero_kpi:[{label:'Publications',key:'papers'},{label:'Open Datasets',key:'datasets'},{label:'Core Members',key:'members'}],
+            hero_kpi:[{label:'Publications',key:'papers'},{label:'Open Datasets',key:'datasets'},{label:'Members',key:'members'}],
             title_research:'Research', title_news:'News', title_publications:'Publications', title_datasets:'Datasets', title_people:'People', title_gallery:'Gallery', title_openings:'Openings', title_blog:'Blog', title_contact:'Contact',
             search_placeholder:'Search title/authors/venue…', filter_all:'All', total_fmt:n=>`Total ${n} items`,
             card_homepage:'Homepage', card_paper:'Paper', card_code:'Code', contact_addr_label:'Address', contact_addr:'School of Computer Science, Central South University · CSU-JPG Lab',
@@ -103,7 +103,7 @@
             title_home:'CSU-JPG 实验室',
             title_graduates:'毕业学生',
             intro:'我们专注于以视觉为中心的多模态大模型（Vision-centric MLLM）、具身 AI 与数据中心 AI：视觉-语言预训练、Interleaved 长上下文、长文本图像生成与理解、OR 推理。',
-            hero_kpi:[{label:'论文',key:'papers'},{label:'开放数据/基准',key:'datasets'},{label:'核心成员',key:'members'}],
+            hero_kpi:[{label:'论文',key:'papers'},{label:'开放数据/基准',key:'datasets'},{label:'成员',key:'members'}],
             title_research:'研究方向', title_news:'新闻', title_publications:'论文', title_datasets:'数据集 / Benchmark', title_people:'成员', title_gallery:'相册', title_openings:'招生/招聘', title_blog:'Blog', title_contact:'联系',
             search_placeholder:'搜索标题/作者/会议…', filter_all:'全部', total_fmt:n=>`共 ${n} 篇`,
             card_homepage:'主页 / Homepage', card_paper:'论文', card_code:'代码', contact_addr_label:'地址', contact_addr:'中南大学 · 计算机学院 · CSU-JPG 实验室',
@@ -176,13 +176,50 @@
           { name:'Chart2Code', brief_en:'A new benchmark designed to evaluate chart generation capabilities of LMMs under progressively challenging conditions. ', brief_zh:'一个新基准，用于评估 LMM 在 progressively challenging 条件下的图表生成能力。', link:'https://csu-jpg.github.io/Chart2Code.github.io/' }
         ];
 
-        const people = [
-          {name:'Alex Jinpeng Wang (王金鹏)',role_en:'PI / Tenure-track Professor, CSU',role_zh:'PI / CSU 计算机学院 · Tenure-track Professor',url:'https://fingerrec.github.io',avatar:'https://fingerrec.github.io/index_files/jinpeng/my_photo_2.jpg'},
-          {name:'Dongxing Mao',role_en:'RA',role_zh:'RA',url:'https://scholar.google.com/citations?user=RLVSYY0AAAAJ&hl=en',avatar:'https://csu-jpg.github.io/person_figures/dongxing_mao.jpg'},
-          {name:'Jiahao Tang',role_en:'RA',role_zh:'RA',url:'https://github.com/accebet',avatar:'https://csu-jpg.github.io/person_figures/jiahao_tang.jpg'},
-          // {name:'Songjie Wu',role_en:'Master',role_zh:'Master',url:'https://songjiewu1.github.io/',avatar:'https://csu-jpg.github.io/person_figures/songjie_wu.jpg'},
-          // {name:'Suyang Hou',role_en:'Master',role_zh:'Master',url:'github.com/SuyangLumiere',avatar:'https://csu-jpg.github.io/person_figures/suyang_hou.jpg'}
+        const people_groups = [
+          {
+            key:'faculty', title_en:'Faculty', title_zh:'老师',
+            members:[
+              {name:'Alex Jinpeng Wang (王金鹏)',role_en:'PI / Tenure-track Professor, CSU',role_zh:'PI / CSU 计算机学院 · Tenure-track Professor',url:'https://fingerrec.github.io',avatar:'https://fingerrec.github.io/index_files/jinpeng/my_photo_2.jpg'},
+            ]
+          },
+          {
+            key:'ra', title_en:'Research Assistants', title_zh:'研究助理',
+            members:[
+              {name:'Dongxing Mao',role_en:'RA',role_zh:'RA',url:'https://dongxingmao.github.io/',avatar:'https://csu-jpg.github.io/person_figures/dongxing_mao.jpg'},
+              {name:'Jiahao Tang',role_en:'RA',role_zh:'RA',url:'https://accebet.github.io/',avatar:'https://csu-jpg.github.io/person_figures/jiahao_tang.jpg'},
+            ]
+          },
+          {
+            key:'phd', title_en:'PhD Students', title_zh:'博士生',
+            members:[
+              {name: 'Yuming Fu', role_en:'PhD Student', role_zh:'博士生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/yuming_fu.jpg'},
+              {name: 'Lijian Wu', role_en:'PhD Student', role_zh:'博士生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/lijian_wu.jpg'},
+            ]
+          },
+          {
+            key:'master', title_en:'Master Students', title_zh:'硕士生',
+            members:[
+              {name:'Suyang Hou',role_en:'Master',role_zh:'Master',url:'github.com/SuyangLumiere',avatar:'https://csu-jpg.github.io/person_figures/suyang_hou.jpg'},
+              {name:'Songjie Wu',role_en:'Master',role_zh:'Master',url:'https://songjiewu1.github.io/',avatar:'https://csu-jpg.github.io/person_figures/songjie_wu.jpg'},
+              {name: 'Zijian Zhang', role_en:'Master', role_zh:'硕士生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/zijian_zhang.jpg'},
+              {name: 'Zhichao Peng', role_en:'Master', role_zh:'硕士生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/zhichao_peng.jpg'},
+              {name: 'Yixuan Ye', role_en:'Master', role_zh:'硕士生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/yixuan_ye.jpg'},
+              {name: 'Wanfang Yang', role_en:'Master', role_zh:'硕士生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/wanfang_yang.jpg'},
+            ]
+          },
+          {
+            key:'undergrad', title_en:'Undergraduate Students', title_zh:'本科生',
+            members:[
+              {name: 'Changpeng Zhao', role_en:'Undergraduate Student', role_zh:'本科生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/changpeng_zhao.jpg'},
+              {name: 'Feifei Chen', role_en:'Undergraduate Student', role_zh:'本科生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/feifei_chen.jpg'},
+              {name: 'Jinyao Qi', role_en:'Undergraduate Student', role_zh:'本科生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/zhuobai_dong.jpg'},
+              {name: 'Xiaoyu Wang', role_en:'Undergraduate Student', role_zh:'本科生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/xiaoyu_wang.jpg'},
+              {name: 'Zhuoran Yan', role_en:'Undergraduate Student', role_zh:'本科生', url: '', avatar: 'https://csu-jpg.github.io/person_figures/zhuoran_yan.jpg'},
+            ]
+          },
         ];
+        const people = people_groups.flatMap(g => g.members);
 
         // 自动计算统计数据（从数组长度获取）
         const STATS = { 
@@ -192,7 +229,10 @@
         };
 
         const graduate_students = [
-          {name:'Zhuo Bai',role_en:'Undergraduate Student',role_zh:'本科生',url:'https://zhuobaidong.github.io/',avatar:'https://csu-jpg.github.io/person_figures/zhuobai.jpg'},
+          {name:'Zhuobai Dong',role_en:'Undergraduate Student',role_zh:'本科生',next_en:'Next: WHU',next_zh:'去向：WHU',url:'https://zhuobaidong.github.io/',avatar:'https://csu-jpg.github.io/person_figures/zhuobai.jpg'},
+          {name:'Hangyu Ran',role_en:'Undergraduate Student',role_zh:'本科生',next_en:'Next: HKUST (GZ)',next_zh:'去向：香港科技大学 (GZ)',url:'https://hangyuran.github.io/',avatar:'https://csu-jpg.github.io/person_figures/hangyu.jpg'},
+          {name: 'Siyu Yan', role_en:'Undergraduate Student', role_en:'本科生', next_en:'Next: HKUST', next_zh:'去向：香港科技大学', url: 'https://sgysy.github.io', avatar: 'https://csu-jpg.github.io/person_figures/siyu.jpg'},
+          {name: 'Xin Yu', role_en:'Undergraduate Student', role_en:'本科生', next_en:'Next: Columbia University', next_zh:'去向：哥伦比亚大学', url: 'https://sgysy.github.io', avatar: 'https://csu-jpg.github.io/person_figures/xinyu.jpg'},
         ];
 
         const news = [
@@ -526,19 +566,26 @@
 
                 {/* People */}
                 <Section id="people" title={T.title_people}>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    {people.map((p,i)=>(
-                      <Card key={i}>
-                        <div className="flex items-center gap-3">
-                          {p.avatar ? (<img src={p.avatar} alt={p.name} className="h-12 w-12 rounded-full object-cover border"/>) :
-                            (<div className="h-12 w-12 rounded-full border bg-neutral-100 flex items-center justify-center text-sm font-semibold">{p.name[0]}</div>)}
-                          <div>
-                            <div className="font-semibold">{p.name}</div>
-                            <div className="text-sm muted">{pick(p,'role',lang)}</div>
-                            {p.url && <a href={p.url} target="_blank" className="text-xs text-blue-700 hover:underline mt-1 inline-block">{T.card_homepage}</a>}
-                          </div>
+                  <div className="space-y-8">
+                    {people_groups.filter(g => g.members.length > 0).map(g => (
+                      <div key={g.key}>
+                        <h3 className="text-lg font-semibold mb-3">{pick(g,'title',lang)}</h3>
+                        <div className="grid md:grid-cols-3 gap-4">
+                          {g.members.map((p,i)=>(
+                            <Card key={i}>
+                              <div className="flex items-center gap-3">
+                                {p.avatar ? (<img src={p.avatar} alt={p.name} className="h-12 w-12 rounded-full object-cover border"/>) :
+                                  (<div className="h-12 w-12 rounded-full border bg-neutral-100 flex items-center justify-center text-sm font-semibold">{p.name[0]}</div>)}
+                                <div>
+                                  <div className="font-semibold">{p.name}</div>
+                                  <div className="text-sm muted">{pick(p,'role',lang)}</div>
+                                  {p.url && <a href={p.url} target="_blank" className="text-xs text-blue-700 hover:underline mt-1 inline-block">{T.card_homepage}</a>}
+                                </div>
+                              </div>
+                            </Card>
+                          ))}
                         </div>
-                      </Card>
+                      </div>
                     ))}
                   </div>
                 </Section>
@@ -555,6 +602,7 @@
                           <div>
                             <div className="font-semibold">{p.name}</div>
                             <div className="text-sm muted">{pick(p,'role',lang)}</div>
+                            {pick(p,'next',lang) && <div className="text-sm muted">{pick(p,'next',lang)}</div>}
                             {p.url && <a href={p.url} target="_blank" className="text-xs text-blue-700 hover:underline mt-1 inline-block">{T.card_homepage}</a>}
                           </div>
                         </div>
